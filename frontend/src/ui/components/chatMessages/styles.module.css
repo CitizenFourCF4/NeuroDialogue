@@ -1,0 +1,51 @@
+.chat_messages_wrapper{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  padding-top: 12px;
+}
+
+.message_wrapper{
+  display: flex;
+  padding: 12px;
+  text-align: left;
+}
+
+.avatar{
+  background: #e74c3c;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  height: 30px;
+}
+
+.avatar[author='chatbot']{
+  background: #0ed162;
+}
+
+
+.text_wrapper{
+  padding-left: 20px;
+  width: 100%;
+}
+
+.author {
+  line-height: 30px;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.message{
+  word-wrap: break-word;
+}
+
+
+.file_link{
+  text-decoration:'none';
+  color: #4293db;
+}
+
+.file_link:hover {
+  color: #4293db;
+  text-decoration: none;
+  cursor: pointer;
+}

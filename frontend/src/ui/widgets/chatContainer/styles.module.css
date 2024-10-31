@@ -1,0 +1,67 @@
+.chatbox{
+    flex: 1;
+    position: relative;
+    height: 100%;
+}
+
+.chatbox[colorMode='dark']{
+    background-color: #212121;
+}
+
+.chatbox[colorMode='light']{
+    background-color: #fff;
+}
+
+/* ------------------ Chat input block -----------------------*/
+.chat_input_holder{
+    padding: 30px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    align-items: center;
+  }
+
+/* ---------------------------------- ------------*/
+
+.chat_messages_holder{
+    padding: 30px;
+    left: 0;
+    right: 0;
+    height: 85%;
+    display: flex;
+    overflow-y: auto;
+    max-height: 85%;
+}
+
+#dropdown_toggle{
+    border: 0;
+    font-size: 20px;
+}
+
+#dropdown_toggle[colorMode='light']{
+    background-color: white;
+    color: black;
+}
+
+#dropdown_toggle[colorMode='dark']{
+    background-color: #212121;
+    color: white;
+}
+
+#dropdown_toggle:focus{
+    border: none;
+    box-shadow: none;
+}
+
+.img_generated{
+    width: 250px;
+    border-radius: 10px;
+    margin-left: 0;
+}
+
+.clip_wrapper:hover{
+    cursor: pointer;
+}

@@ -1,8 +1,10 @@
-import React, {useState, useEffect} from 'react'
-import styles from './chatPage.module.css'
-import Sidebar from 'src/components/sidebar/sidebar'
-import Welcome from 'src/components/welcome/welcome'
-import ChatContainer from 'src/components/chatContainer/chatContainer'
+import React, {useState} from 'react'
+
+import Sidebar from 'src/ui/widgets/sidebar/sidebar'
+import Welcome from 'src/ui/widgets/welcome/welcome'
+import ChatContainer from 'src/ui/widgets/chatContainer/chatContainer'
+
+import styles from './styles.module.css'
 
 const HomePage = () => {
 
@@ -13,12 +15,9 @@ const HomePage = () => {
     <div className={styles.container} colorMode={colorMode}>
       <Sidebar setSelectedChat={setSelectedChat} colorMode={colorMode} setColorMode={setColorMode}/>
       {selectedChat 
-        ?(
-          <ChatContainer selectedChat={selectedChat} colorMode={colorMode}/>
-        )
-        :(
-          <Welcome colorMode={colorMode}/>
-        )}      
+        ? <ChatContainer selectedChat={selectedChat} colorMode={colorMode}/>
+        : <Welcome colorMode={colorMode}/>
+      }      
     </div>
   )
 }

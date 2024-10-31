@@ -18,7 +18,7 @@ const FileView = (props) => {
       </div>
       <div>
         <div>{props.filename}</div>
-        <div>{(props.filesize==='Unknown') ? 'Неизвестно' :formatFileSize(props.filesize)}</div>
+        <div>{(props.filesize==='Unknown') ? 'Неизвестно' : formatFileSize(props.filesize)}</div>
       </div>
     </div>
   )
