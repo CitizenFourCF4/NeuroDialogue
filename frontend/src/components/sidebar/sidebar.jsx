@@ -84,6 +84,7 @@ const Sidebar = ({setSelectedChat, colorMode, setColorMode}) => {
 
   return (
     <aside className={styles.sidemenu} colorMode={colorMode}>
+        <img src="/logo.jpeg" alt="" className={styles.logo}/>
         <div className={styles.side_menu_button} onClick={handleCreateChatModalShow} colorMode={colorMode}>
             <span>+</span>
             New Chat

@@ -2,7 +2,6 @@ ul{
     padding-left: 1px;
 }
 
-
 .sidemenu{
     width: 260px;
     padding: 10px;
@@ -72,7 +71,7 @@ ul{
 
 .chat_list{
     display: flex;
-    height: 80%;
+    height: 70%;
 }
 
 .avatar{
@@ -166,4 +165,10 @@ ul{
 #card[colorMode='light']{
     background-color: #fff;
     color: rgb(0, 0, 0)
+}
+
+.logo{
+    width: 60px;
+    margin-bottom: 10%;
+    border-radius: 50%;
 }
