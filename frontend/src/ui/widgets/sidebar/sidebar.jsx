@@ -3,11 +3,11 @@ import axios from 'axios'
 import { getChatsRoute, upgradeChatRoute } from 'src/utils/APIRoutes'
 import styles from './sidebar.module.css'
 import { BsPencil,BsXLg } from "react-icons/bs";
-import NewChatTitleModal from '../modals/newChatTitle'
+import RenameChatModal from 'src/ui/components/modals/renameChatModal/RenameChatModal';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { MdLogout, MdBrightnessMedium } from "react-icons/md";
-import NewChatCreationModal from '../modals/creationChat'
+import NewChatModal from 'src/ui/components/modals/newChatModal/NewChatModal';
 import { useKeycloak } from "@react-keycloak/web";
 import Badge from 'react-bootstrap/Badge';
 
@@ -118,8 +118,8 @@ const Sidebar = ({setSelectedChat, colorMode, setColorMode}) => {
           <div className={styles.avatar}>{keycloak.authenticated && keycloak.tokenParsed.preferred_username[0]}</div>
           <span className={styles.userInfo_username}>{keycloak.authenticated && keycloak.tokenParsed.preferred_username}</span>  
         </div>
-        <NewChatTitleModal show={isShowChangeTitleModal} onHide={handleChangeTitleModalClose} selectedChatId={selectedChatId} getUserChats={getUserChats}/>
-        <NewChatCreationModal show={isShowCreateChatModal} getUserChats={getUserChats} onHide={handleCreateChatModalClose}/>
+        <RenameChatModal show={isShowChangeTitleModal} onHide={handleChangeTitleModalClose} selectedChatId={selectedChatId} getUserChats={getUserChats}/>
+        <NewChatModal show={isShowCreateChatModal} getUserChats={getUserChats} onHide={handleCreateChatModalClose}/>
 
     </aside>
     

@@ -1,19 +1,22 @@
 import React, {useState} from 'react';
+import { useKeycloak } from "@react-keycloak/web";
+
+import axios from 'axios';
+import { upgradeChatRoute } from 'src/utils/APIRoutes';
+
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { upgradeChatRoute } from '../../utils/APIRoutes';
-import axios from 'axios';
-import { useKeycloak } from "@react-keycloak/web";
-import styles from './modals.module.css'
 import ColorCircle from 'src/shared/fileview/circle/Circle';
 import { HiOutlineChatAlt2 } from "react-icons/hi";
 
+import styles from './styles.module.css'
 
-const NewChatCreationModal = (props) => {
+
+const NewChatModal = (props) => {
 
   const [chatMode, setChatMode] = useState(undefined)
 
-  const { keycloak } = useKeycloak();
+  const { keycloak } = useKeycloak()
 
   const [title, setTitle] = useState('New Chat')
   
@@ -37,7 +40,7 @@ const NewChatCreationModal = (props) => {
 
   const createChatHandler = () => {
     if (!chatMode) {
-      alert("Выберите chat mode")
+      alert("Выберите тип чата")
     }
     else{
       const data = {
@@ -73,7 +76,7 @@ const NewChatCreationModal = (props) => {
       </Modal.Header>
       <Modal.Body style={{'display':'flex', justifyContent:'center'}}>
         <div className={styles.chat_creation_wrapper}>
-          <input type="text" onChange={e => setTitle(e.target.value)}  placeholder="Enter chat title ..." className={styles.chat_title_input}/>
+          <input type="text" onChange={e => setTitle(e.target.value)}  placeholder="Название чата ..." className={styles.chat_title_input}/>
           <ul style={{justifyContent: 'center', 'listStyle': 'none'}}>
             {chatModes.map((mode, idx) => (
               <li className={styles.model_header} id={idx} onClick={() => setChatMode(mode.title_)} active={(mode.title_===chatMode) ? 'active': ''}>
@@ -85,12 +88,10 @@ const NewChatCreationModal = (props) => {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="success" onClick={createChatHandler}>Create</Button>
+        <Button variant="success" onClick={createChatHandler}>Создать</Button>
       </Modal.Footer>
     </Modal>
   );
 }
 
-export default NewChatCreationModal
-  
-
+export default NewChatModal

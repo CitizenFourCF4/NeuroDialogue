@@ -1,11 +1,14 @@
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form';
 import React, {useState} from 'react';
-import { upgradeChatRoute } from 'src/utils/APIRoutes'
-import axios from 'axios';
 
-const NewChatTitleModal = (props) => {
+import axios from 'axios';
+import { upgradeChatRoute } from 'src/utils/APIRoutes';
+
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
+
+
+const RenameChatModal = (props) => {
 
   const [inputTitle, setInputTitle] = useState('')
 
@@ -31,7 +34,7 @@ const NewChatTitleModal = (props) => {
       <Modal.Body data-bs-theme="dark">
         <Form data-bs-theme="dark">
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1" data-bs-theme="dark">
-            <Form.Label data-bs-theme="dark">New Title</Form.Label>
+            <Form.Label data-bs-theme="dark">Новое название</Form.Label>
             <Form.Control
               type="text"
               onChange={e => setInputTitle(e.target.value)}
@@ -56,4 +59,4 @@ const NewChatTitleModal = (props) => {
   )
 }
 
-export default NewChatTitleModal
+export default RenameChatModal
