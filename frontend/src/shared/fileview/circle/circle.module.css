@@ -1,0 +1,11 @@
+.circle{
+  border-radius:50%; 
+  width: 16px; 
+  aspect-ratio: 1;
+  margin-right:10px;
+  border: 2px solid;
+}
+
+.circle[active='active']{
+  border: 8px solid;
+}

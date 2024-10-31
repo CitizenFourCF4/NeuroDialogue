@@ -1,0 +1,14 @@
+.body_wrapper{
+  display: flex
+}
+
+.circle{
+  width: 50px;
+  height: 50px;
+  background-color: #4293db;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 18px
+}

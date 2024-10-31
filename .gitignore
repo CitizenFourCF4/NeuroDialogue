@@ -1,0 +1,6 @@
+.env
+__pycache__
+migrations
+node_modules
+media
+keycloak-25.0.5
