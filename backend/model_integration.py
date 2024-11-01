@@ -18,6 +18,8 @@ from nltk.tokenize import WordPunctTokenizer
 from num2words import num2words
 from vosk_tts import Model, Synth
 
+from loguru import logger
+
 
 def process_pdf_2_file(path_to_pdf:Union[str, Path], output_dir:Union[str, Path], model:str='0.1.0-base')->subprocess.CompletedProcess:
     """Extracts text from a pdf file and saves it in markdown
@@ -30,8 +32,21 @@ def process_pdf_2_file(path_to_pdf:Union[str, Path], output_dir:Union[str, Path]
     Returns:
         subprocess.CompletedProcess: Script execution/non-execution report
     """
-    result = subprocess.run(['nougat', path_to_pdf, '-o', output_dir, '-m', model], capture_output=True, text=True)
-    return result
+    logger.info("Начало обработки PDF файла", path_to_pdf=path_to_pdf, output_dir=output_dir, model=model)
+    
+    try:
+        result = subprocess.run(['nougat', str(path_to_pdf), '-o', str(output_dir), '-m', model], capture_output=True, text=True)
+        
+        if result.returncode == 0:
+            logger.success("PDF файл успешно обработан", path_to_pdf=path_to_pdf)
+        else:
+            logger.error("Ошибка при обработке PDF файла", path_to_pdf=path_to_pdf, error=result.stderr)
+        
+        return result
+
+    except Exception as e:
+        logger.exception("Произошла ошибка при обработке PDF файла", path_to_pdf=path_to_pdf)
+        raise  # Повторно выбрасываем исключение после логирования
 
 def generate_random_sequence(length=10)->str:
     """Generates a sequence of a given length
@@ -60,20 +75,30 @@ def process_text_to_speech(text:str, path_prefix:str, filename:str='', speaker_i
     Returns:
         str: filename
     """
+    logger.info("Запуск преобразования текста в речь", text=text, path_prefix=path_prefix, filename=filename, speaker_id=speaker_id, model_name=model_name)
+
     if not filename:
         filename = generate_random_sequence(10) + '.wav'
+        logger.debug("Имя файла не указано, сгенерировано имя: {}", filename)
+
     model = Model(model_name=model_name)
     synth = Synth(model)
 
     tokenizer = WordPunctTokenizer()
     tokens = tokenizer.tokenize(text)
 
+    logger.debug("Токены текста: {}", tokens)
+
     for i in range(len(tokens)):
         if tokens[i].isdigit():
             tokens[i] = num2words(tokens[i], to='cardinal', lang='ru')
 
-    text=' '.join(tokens)
+    text = ' '.join(tokens)
+    logger.debug("Преобразованный текст: {}", text)
 
     output_path = os.path.join(path_prefix, filename)
+    logger.info("Синтез речи в файл: {}", output_path)
     synth.synth(text, output_path, speaker_id=speaker_id)
+
+    logger.success("Преобразование завершено, файл сохранен: {}", filename)
     return filename

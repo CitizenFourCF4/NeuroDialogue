@@ -4,8 +4,3 @@ nltk==3.8.1
 num2words==0.5.13
 python-dotenv==1.0.1
 vosk_tts==0.3.56
-django-cors-headers==4.6.0
-psycopg2-binary==2.9.10
-pydantic==2.9.2 
-djangorestframework-simplejwt==5.3.1
-transformers==4.38.2
