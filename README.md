@@ -27,7 +27,12 @@ pip install -r requirements.txt
 
 1) Необходимо загрузить модели так, как указано в туториале (появится позднее)
 2) Запустить PostgreSQL
-3) Создать .env файл (инструкция появится позднее)
+3) Создать .env файл. В нем должны быть следующие поля
+- DJANGO_SECRET_KEY
+- DATABASE_NAME
+- DATABASE_USER
+- DATABASE_PASSWORD
+- SERVER_URL
 4) Соединить Django с PostgreSQL при помощи команд
 ```bash
 python manage.py makemigrations
@@ -41,7 +46,7 @@ python manage.py runserver
 
 #### Keycloak
 Средство авторизации в проекте. 
-1) Для начала работы необходимо скачать актуальную версию (у меня - 25.0.5)
+1) Для начала работы необходимо скачать актуальную версию (у меня - 25.0.5) `https://www.keycloak.org/archive/downloads-25.0.5.html`
 2) Подготовить `realm` с именем `react-realm`, `clientId` с именем `react-client` здесь указан способ https://blog.logrocket.com/implement-keycloak-authentication-react/
 3) Запустить сервис командой 
 ```bash
