@@ -67,10 +67,10 @@ const ChatContainer = ({selectedChat, colorMode}) => {
     }
     else { // sendData.message_type === 'file'
       const data = new FormData();
-      formData.append('chat_id', selectedChat)
-      formData.append('message', selectedFile);
-      formData.append('username', keycloak.tokenParsed.preferred_username)
-      formData.append('message_type', "file");
+      data.append('chat_id', selectedChat)
+      data.append('message', selectedFile);
+      data.append('username', keycloak.tokenParsed.preferred_username)
+      data.append('message_type', "file");
       try{
         const response = axios.post(addMessageRoute, data, {
           headers: { 'Content-Type': 'multipart/form-data' }
