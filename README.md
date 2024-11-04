@@ -1,4 +1,4 @@
-x`Данный проект состоит из 4 сервисов:
+#### Данный проект состоит из 4 сервисов:
 - Frontend (React) 
 - Backend (Django)
 - Database (PostgreSQL)
