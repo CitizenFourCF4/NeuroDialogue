@@ -48,8 +48,13 @@ python manage.py runserver
 Средство авторизации в проекте. 
 1) Для начала работы необходимо скачать актуальную версию (26.0.5) [https://www.keycloak.org/downloads](https://www.keycloak.org/downloads)
 2) Подготовить `realm` с именем `react-realm`, `clientId` с именем `react-client` здесь указан способ https://blog.logrocket.com/implement-keycloak-authentication-react/
-3) Запустить сервис командой 
+3) Запустить сервис командой
+- На ubuntu
 ```bash
 ./bin/kc.sh start-dev
+```
+- На windows
+```bash
+./bin/kc.bat start-dev
 ```
 Сервер будет развернут по адресу  `http://localhost:8080`
