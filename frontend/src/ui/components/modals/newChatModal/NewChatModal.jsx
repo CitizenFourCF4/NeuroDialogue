@@ -48,7 +48,7 @@ const NewChatModal = (props) => {
         'username': keycloak.tokenParsed.preferred_username,
         'chat_mode': chatMode
       }
-    
+      setTitle('New Chat')
       axios.post(upgradeChatRoute, data)
       .then(function() {
         props.getUserChats()

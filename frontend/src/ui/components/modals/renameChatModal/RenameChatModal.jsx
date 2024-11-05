@@ -28,7 +28,7 @@ const RenameChatModal = (props) => {
 
   return(
     <Modal {...props} backdrop="static" data-bs-theme="dark" centered>
-      <Modal.Header closeButton data-bs-theme={"dark"}>
+      <Modal.Header closeButton data-bs-theme="dark">
         <Modal.Title>Введите новое название чата</Modal.Title>
       </Modal.Header>
       <Modal.Body data-bs-theme="dark">

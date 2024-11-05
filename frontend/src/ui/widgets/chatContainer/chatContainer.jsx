@@ -11,7 +11,7 @@ import TextInputForm from 'src/ui/components/TextInputForm/TextInputForm';
 
 import styles from './styles.module.css'
 
-const ChatContainer = ({selectedChat, colorMode}) => {
+const ChatContainer = ({selectedChatId, colorMode}) => {
 
   const [chatMode, setChatMode] = useState('')
   const [messages, setMessages] = useState([])
@@ -52,14 +52,14 @@ const ChatContainer = ({selectedChat, colorMode}) => {
     if (sendData.message_type === 'text') {
       
       const data = {
-        'chat_id': selectedChat, 
+        'chat_id': selectedChatId, 
         'message': sendData.message, 
         'username': keycloak.tokenParsed.preferred_username,
         'message_type': 'text' 
       }
       try{
         const response = await axios.post(addMessageRoute, data)
-        getChatData()
+        if (data.chat_id === selectedChatId) getChatData()
       } 
       catch(error){
         console.log(error)
@@ -67,7 +67,7 @@ const ChatContainer = ({selectedChat, colorMode}) => {
     }
     else { // sendData.message_type === 'file'
       const data = new FormData();
-      formData.append('chat_id', selectedChat)
+      formData.append('chat_id', selectedChatId)
       formData.append('message', selectedFile);
       formData.append('username', keycloak.tokenParsed.preferred_username)
       formData.append('message_type', "file");
@@ -75,13 +75,12 @@ const ChatContainer = ({selectedChat, colorMode}) => {
         const response = axios.post(addMessageRoute, data, {
           headers: { 'Content-Type': 'multipart/form-data' }
         })
-        getChatData()
+        if (data.chat_id === selectedChatId) getChatData()
       } 
       catch(error){
         console.log(error)
       }
     }
-      
   }
   
   const handleClipClick = () => {
@@ -89,10 +88,9 @@ const ChatContainer = ({selectedChat, colorMode}) => {
     fileInputRef.current.click();
   };
 
-
   const getChatData = async() => {
     try{
-      const response = await axios.get(`${getChatRoute}${selectedChat}/`)
+      const response = await axios.get(`${getChatRoute}${selectedChatId}/`)
       setChatMode(response.data.chat_mode)
       setMessages(response.data.messages)
     } 
@@ -103,7 +101,7 @@ const ChatContainer = ({selectedChat, colorMode}) => {
 
   useEffect(()=> {
     getChatData()
-  }, [selectedChat])
+  }, [selectedChatId])
 
   return (
     <section className={styles.chatbox} colorMode={colorMode}>

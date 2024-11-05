@@ -8,14 +8,14 @@ import styles from './styles.module.css'
 
 const HomePage = () => {
 
-  const [selectedChat, setSelectedChat] = useState(undefined)
+  const [selectedChatId, setSelectedChatId] = useState(undefined)
   const [colorMode, setColorMode] = useState('dark')
 
   return (
     <div className={styles.container} colorMode={colorMode}>
-      <Sidebar setSelectedChat={setSelectedChat} colorMode={colorMode} setColorMode={setColorMode}/>
-      {selectedChat 
-        ? <ChatContainer selectedChat={selectedChat} colorMode={colorMode}/>
+      <Sidebar selectedChatId={selectedChatId} setSelectedChatId={setSelectedChatId} colorMode={colorMode} setColorMode={setColorMode}/>
+      {selectedChatId 
+        ? <ChatContainer selectedChatId={selectedChatId} colorMode={colorMode}/>
         : <Welcome colorMode={colorMode}/>
       }      
     </div>
