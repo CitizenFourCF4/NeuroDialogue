@@ -93,7 +93,8 @@ def get_chat_info_view(request:Request, pk:int)->Response:
     output = {
         "chat_title": chat.title,
         "chat_mode": chat.mode,
-        "messages": messages
+        "messages": messages,
+        "chat_id": chat.id
     }
     return Response(output, status=status.HTTP_200_OK)
 
@@ -199,15 +200,16 @@ class ChatEventHandlerView(APIView):
 
 
 
-class CreateMessageValidator(BaseModel):
-    chat_id:int
-    username:str
-    message:str
-    message_type:str
+class MessageValidator:
+    def __init__(self, chat_id, username, message, message_type) -> None:
+        self.chat_id = chat_id
+        self.username = username
+        self.message = message
+        self.message_type = message_type
 
 
 @api_view(['POST'])
-def create_message_view(request:Request)->Response:
+def create_message_view(request:Request)->Response: 
     """Chat message creation handler
 
     Args:
@@ -217,7 +219,12 @@ def create_message_view(request:Request)->Response:
         Response: _description_
     """
     try:
-        request_data = CreateMessageValidator.model_validate(request.data)
+        request_data = MessageValidator(
+            chat_id=request.data['chat_id'],
+            username=request.data['username'],
+            message=request.data['message'],
+            message_type=request.data['message_type'],
+            )
     except:
         return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 

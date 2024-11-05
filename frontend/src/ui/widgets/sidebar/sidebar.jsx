@@ -46,15 +46,12 @@ const Sidebar = ({selectedChatId, setSelectedChatId, colorMode, setColorMode}) =
         </div>
         <SidebarChatContainer chats={chats} colorMode={colorMode} selectedChatId={selectedChatId} setSelectedChatId={setSelectedChatId} getUserChats={getUserChats}/>
         {isShowSettings && <Settings colorMode={colorMode} setColorMode={setColorMode} setIsShowSettings={setIsShowSettings}/>}
-
         <div className={styles.userInfo} onClick={() => setIsShowSettings(!isShowSettings)} colorMode={colorMode}>
           <div className={styles.avatar}>{keycloak.authenticated && keycloak.tokenParsed.preferred_username[0]}</div>
           <span className={styles.userInfo_username}>{keycloak.authenticated && keycloak.tokenParsed.preferred_username}</span>  
         </div>
         <NewChatModal show={isShowCreateChatModal} getUserChats={getUserChats} onHide={handleCreateChatModalClose}/>
-
     </aside>
-    
   )
 }
 
