@@ -1,9 +1,17 @@
-import React from 'react'
+import React, {useRef, useEffect,} from 'react'
 
 import styles from './styles.module.css'
 import FileView from 'src/shared/fileview/FileView';
 
 const ChatMessages = ({messages}) => {
+
+  const chatEndRef = useRef(null);
+  useEffect(() => {
+    // Прокрутка к последнему сообщению
+    if (chatEndRef.current) {
+        chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
 
   const renderMessage = (msg) => {
     switch (msg.message_type) {
@@ -28,15 +36,17 @@ const ChatMessages = ({messages}) => {
     <div className={styles.chat_messages_wrapper}>
       {messages && messages.map((msg, index) => (
         <div className={styles.message_wrapper} key={index} author={msg.author}>
-          <div className={styles.avatar} author={msg.author} />
+          <div className={styles.avatar} author={msg.author}>
+          </div>
           <div className={styles.text_wrapper}>
-            <div className={styles.author}>{msg.author === 'chatbot' ? msg.author : 'You'}</div>
+            <div className={styles.author}>{msg.author === 'chatbot' ? 'Bot ' : 'You'}</div>
               <div className={styles.message}>
                 {renderMessage(msg)}
               </div>
           </div>  
         </div>
       ))}
+      <div ref={chatEndRef} />
     </div>
   )
 }

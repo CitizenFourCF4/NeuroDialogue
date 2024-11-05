@@ -123,7 +123,7 @@ class ChatEventHandlerView(APIView):
         Args:
             BaseModel
         """
-        chat_id:str
+        chat_id:int
         new_title:str
 
 
@@ -162,6 +162,7 @@ class ChatEventHandlerView(APIView):
             Response: request status code
         """
         try:
+            print(request.data)
             request_data = self.PutRequestValidator.model_validate(request.data)
         except:
             return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
