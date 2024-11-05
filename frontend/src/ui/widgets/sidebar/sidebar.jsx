@@ -97,7 +97,7 @@ const Sidebar = ({setSelectedChat, colorMode, setColorMode}) => {
                   {renderMode(chat)}
                   {chat.chat_title}
                 </div>
-                {selectedChatId ===chat.chat_id && 
+                {selectedChatId === chat.chat_id && 
                 <div>
                   <BsPencil onClick={handleChangeTitleModalShow} style={{'marginRight': '20px'}}/>     
                   <BsXLg onClick={() => chatDeleteHandler(chat.chat_id)}/>

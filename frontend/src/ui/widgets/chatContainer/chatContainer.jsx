@@ -72,7 +72,7 @@ const ChatContainer = ({selectedChat, colorMode}) => {
       data.append('username', keycloak.tokenParsed.preferred_username)
       data.append('message_type', "file");
       try{
-        const response = axios.post(addMessageRoute, data, {
+        const response = await axios.post(addMessageRoute, data, {
           headers: { 'Content-Type': 'multipart/form-data' }
         })
         getChatData()
@@ -81,7 +81,6 @@ const ChatContainer = ({selectedChat, colorMode}) => {
         console.log(error)
       }
     }
-      
   }
   
   const handleClipClick = () => {
@@ -93,8 +92,11 @@ const ChatContainer = ({selectedChat, colorMode}) => {
   const getChatData = async() => {
     try{
       const response = await axios.get(`${getChatRoute}${selectedChat}/`)
-      setChatMode(response.data.chat_mode)
-      setMessages(response.data.messages)
+      console.log(response.data.chat_id,selectedChat)
+      if (response.data.chat_id === selectedChat){
+        setChatMode(response.data.chat_mode)
+        setMessages(response.data.messages)
+      }
     } 
     catch (error){
       console.log(error)

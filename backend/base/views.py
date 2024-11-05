@@ -93,7 +93,8 @@ def get_chat_info_view(request:Request, pk:int)->Response:
     output = {
         "chat_title": chat.title,
         "chat_mode": chat.mode,
-        "messages": messages
+        "messages": messages,
+        "chat_id": chat.id
     }
     return Response(output, status=status.HTTP_200_OK)
 
