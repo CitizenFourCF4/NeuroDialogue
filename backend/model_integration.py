@@ -20,6 +20,8 @@ from vosk_tts import Model, Synth
 
 from loguru import logger
 
+logger.add("dialogue_logging.log", format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}")
+
 
 def process_pdf_2_file(path_to_pdf:Union[str, Path], output_dir:Union[str, Path], model:str='0.1.0-base')->subprocess.CompletedProcess:
     """Extracts text from a pdf file and saves it in markdown
@@ -32,21 +34,21 @@ def process_pdf_2_file(path_to_pdf:Union[str, Path], output_dir:Union[str, Path]
     Returns:
         subprocess.CompletedProcess: Script execution/non-execution report
     """
-    logger.info("Начало обработки PDF файла", path_to_pdf=path_to_pdf, output_dir=output_dir, model=model)
+    logger.info(f"Starting PDF processing: {path_to_pdf} with model: {model}")
     
     try:
         result = subprocess.run(['nougat', str(path_to_pdf), '-o', str(output_dir), '-m', model], capture_output=True, text=True)
         
         if result.returncode == 0:
-            logger.success("PDF файл успешно обработан", path_to_pdf=path_to_pdf)
+            logger.info(f"Successfully processed PDF: {path_to_pdf}")
         else:
-            logger.error("Ошибка при обработке PDF файла", path_to_pdf=path_to_pdf, error=result.stderr)
+            logger.error(f"Error processing PDF: {path_to_pdf}. Return code: {result.returncode}. Output: {result.stdout}. Error: {result.stderr}")
         
         return result
-
+    
     except Exception as e:
-        logger.exception("Произошла ошибка при обработке PDF файла", path_to_pdf=path_to_pdf)
-        raise  # Повторно выбрасываем исключение после логирования
+        logger.exception(f"An exception occurred while processing PDF: {path_to_pdf}. Exception: {e}")
+        raise  
 
 def generate_random_sequence(length=10)->str:
     """Generates a sequence of a given length
@@ -75,30 +77,38 @@ def process_text_to_speech(text:str, path_prefix:str, filename:str='', speaker_i
     Returns:
         str: filename
     """
-    logger.info("Запуск преобразования текста в речь", text=text, path_prefix=path_prefix, filename=filename, speaker_id=speaker_id, model_name=model_name)
-
+    logger.info("Starting text-to-speech conversion.")
+    
     if not filename:
         filename = generate_random_sequence(10) + '.wav'
-        logger.debug("Имя файла не указано, сгенерировано имя: {}", filename)
+        logger.info(f"Generated random filename: {filename}")
 
-    model = Model(model_name=model_name)
-    synth = Synth(model)
+    logger.info(f"Using model: {model_name} and speaker ID: {speaker_id}")
 
-    tokenizer = WordPunctTokenizer()
-    tokens = tokenizer.tokenize(text)
+    try:
+        model = Model(model_name=model_name)
+        synth = Synth(model)
 
-    logger.debug("Токены текста: {}", tokens)
+        tokenizer = WordPunctTokenizer()
+        tokens = tokenizer.tokenize(text)
 
-    for i in range(len(tokens)):
-        if tokens[i].isdigit():
-            tokens[i] = num2words(tokens[i], to='cardinal', lang='ru')
+        logger.debug(f"Tokenized text: {tokens}")
 
-    text = ' '.join(tokens)
-    logger.debug("Преобразованный текст: {}", text)
+        for i in range(len(tokens)):
+            if tokens[i].isdigit():
+                tokens[i] = num2words(tokens[i], to='cardinal', lang='ru')
 
-    output_path = os.path.join(path_prefix, filename)
-    logger.info("Синтез речи в файл: {}", output_path)
-    synth.synth(text, output_path, speaker_id=speaker_id)
+        text = ' '.join(tokens)
+        logger.debug(f"Processed text: {text}")
 
-    logger.success("Преобразование завершено, файл сохранен: {}", filename)
-    return filename
+        output_path = os.path.join(path_prefix, filename)
+        logger.info(f"Output path: {output_path}")
+
+        synth.synth(text, output_path, speaker_id=speaker_id)
+        logger.info(f"Successfully synthesized speech to {output_path}")
+
+        return filename
+
+    except Exception as e:
+        logger.exception(f"An error occurred during text-to-speech conversion: {e}")
+        raise
