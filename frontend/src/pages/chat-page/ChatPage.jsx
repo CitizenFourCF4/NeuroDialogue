@@ -1,25 +1,26 @@
-import React, {useState} from 'react'
+import React from 'react'
 
-import Sidebar from 'src/ui/widgets/sidebar/sidebar'
-import Welcome from 'src/ui/widgets/welcome/welcome'
-import ChatContainer from 'src/ui/widgets/chatContainer/chatContainer'
+import Sidebar from 'src/widgets/sidebar/ui/Sidebar'
+import ChatContainer from 'src/widgets/chat-container/ChatContainer'
+import WelcomeContainer from 'src/widgets/welcome-container/WelcomeContainer'
+import { useSelector } from 'react-redux'
+import { selectChatId, selectColorMode } from 'src/app/store/slices/chatSlice'
 
 import styles from './styles.module.css'
 
-const HomePage = () => {
-
-  const [selectedChatId, setSelectedChatId] = useState(undefined)
-  const [colorMode, setColorMode] = useState('dark')
+const ChatPage = () => {
+  const selectedChatId = useSelector(selectChatId)
+  const colormode = useSelector(selectColorMode)
 
   return (
-    <div className={styles.container} colorMode={colorMode}>
-      <Sidebar selectedChatId={selectedChatId} setSelectedChatId={setSelectedChatId} colorMode={colorMode} setColorMode={setColorMode}/>
+    <div className={styles.container} colormode={colormode}>
+      <Sidebar />
       {selectedChatId 
-        ? <ChatContainer selectedChatId={selectedChatId} colorMode={colorMode}/>
-        : <Welcome colorMode={colorMode}/>
+        ? <ChatContainer />
+        : <WelcomeContainer />
       }      
     </div>
   )
 }
 
-export default HomePage
+export default ChatPage

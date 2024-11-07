@@ -1,14 +1,14 @@
 .container{
-    text-align: center;
-    display: flex;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  text-align: center;
+  display: flex;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .container[colorMode='dark']{
-    background-color: #282c34;
-    color: white;
+  background-color: #282c34;
+  color: white;
 }

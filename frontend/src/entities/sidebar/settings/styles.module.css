@@ -1,0 +1,32 @@
+#card{
+  width: 240px;
+  z-index: 100; 
+  position: absolute;
+  top: 84%; 
+  display: flex;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+#card[colormode='dark']{
+  background-color: #2f2f2f;
+  color: white !important;
+}
+
+#card[colormode='light']{
+  background-color: #fff;
+  color: rgb(0, 0, 0)
+}
+
+#listItem{
+  background: transparent; 
+  cursor: pointer;
+}
+
+#listItem[colormode='dark']{
+  color: white;
+}
+
+#listItem[colormode='light']{
+  color: black;
+}
