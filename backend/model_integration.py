@@ -18,9 +18,7 @@ from nltk.tokenize import WordPunctTokenizer
 from num2words import num2words
 from vosk_tts import Model, Synth
 
-from loguru import logger
-
-logger.add("dialogue_logging.log", format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}")
+from backend.logger_config import logger
 
 
 def process_pdf_2_file(path_to_pdf:Union[str, Path], output_dir:Union[str, Path], model:str='0.1.0-base')->subprocess.CompletedProcess:
