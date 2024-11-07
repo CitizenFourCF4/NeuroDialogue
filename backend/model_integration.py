@@ -18,6 +18,8 @@ from nltk.tokenize import WordPunctTokenizer
 from num2words import num2words
 from vosk_tts import Model, Synth
 
+from backend.logger_config import logger
+
 
 def process_pdf_2_file(path_to_pdf:Union[str, Path], output_dir:Union[str, Path], model:str='0.1.0-base')->subprocess.CompletedProcess:
     """Extracts text from a pdf file and saves it in markdown
@@ -30,8 +32,21 @@ def process_pdf_2_file(path_to_pdf:Union[str, Path], output_dir:Union[str, Path]
     Returns:
         subprocess.CompletedProcess: Script execution/non-execution report
     """
-    result = subprocess.run(['nougat', path_to_pdf, '-o', output_dir, '-m', model], capture_output=True, text=True)
-    return result
+    logger.info(f"Starting PDF processing: {path_to_pdf} with model: {model}")
+    
+    try:
+        result = subprocess.run(['nougat', str(path_to_pdf), '-o', str(output_dir), '-m', model], capture_output=True, text=True)
+        
+        if result.returncode == 0:
+            logger.info(f"Successfully processed PDF: {path_to_pdf}")
+        else:
+            logger.error(f"Error processing PDF: {path_to_pdf}. Return code: {result.returncode}. Output: {result.stdout}. Error: {result.stderr}")
+        
+        return result
+    
+    except Exception as e:
+        logger.exception(f"An exception occurred while processing PDF: {path_to_pdf}. Exception: {e}")
+        raise  
 
 def generate_random_sequence(length=10)->str:
     """Generates a sequence of a given length
@@ -60,20 +75,38 @@ def process_text_to_speech(text:str, path_prefix:str, filename:str='', speaker_i
     Returns:
         str: filename
     """
+    logger.info("Starting text-to-speech conversion.")
+    
     if not filename:
         filename = generate_random_sequence(10) + '.wav'
-    model = Model(model_name=model_name)
-    synth = Synth(model)
+        logger.info(f"Generated random filename: {filename}")
 
-    tokenizer = WordPunctTokenizer()
-    tokens = tokenizer.tokenize(text)
+    logger.info(f"Using model: {model_name} and speaker ID: {speaker_id}")
 
-    for i in range(len(tokens)):
-        if tokens[i].isdigit():
-            tokens[i] = num2words(tokens[i], to='cardinal', lang='ru')
+    try:
+        model = Model(model_name=model_name)
+        synth = Synth(model)
 
-    text=' '.join(tokens)
+        tokenizer = WordPunctTokenizer()
+        tokens = tokenizer.tokenize(text)
 
-    output_path = os.path.join(path_prefix, filename)
-    synth.synth(text, output_path, speaker_id=speaker_id)
-    return filename
+        logger.debug(f"Tokenized text: {tokens}")
+
+        for i in range(len(tokens)):
+            if tokens[i].isdigit():
+                tokens[i] = num2words(tokens[i], to='cardinal', lang='ru')
+
+        text = ' '.join(tokens)
+        logger.debug(f"Processed text: {text}")
+
+        output_path = os.path.join(path_prefix, filename)
+        logger.info(f"Output path: {output_path}")
+
+        synth.synth(text, output_path, speaker_id=speaker_id)
+        logger.info(f"Successfully synthesized speech to {output_path}")
+
+        return filename
+
+    except Exception as e:
+        logger.exception(f"An error occurred during text-to-speech conversion: {e}")
+        raise
