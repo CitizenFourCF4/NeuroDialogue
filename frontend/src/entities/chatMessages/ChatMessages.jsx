@@ -2,6 +2,9 @@ import React, {useRef, useEffect,} from 'react'
 import FileView from 'src/shared/fileView/FileView';
 import styles from './styles.module.css'
 
+import { FaRobot } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
+
 const ChatMessages = ({messages}) => {
 
   const chatEndRef = useRef(null);
@@ -36,6 +39,12 @@ const ChatMessages = ({messages}) => {
       {messages && messages.map((msg, index) => (
         <div className={styles.message_wrapper} key={index} author={msg.author}>
           <div className={styles.avatar} author={msg.author}>
+            {
+            msg.author === 'chatbot'
+            ? <FaRobot color='#3ebb34' size={30}/>
+            : <FaUser color='#e66f07' size={30}/>
+          }
+
           </div>
           <div className={styles.text_wrapper}>
             <div className={styles.author}>{msg.author === 'chatbot' ? 'Bot ' : 'You'}</div>
