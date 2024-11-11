@@ -26,7 +26,7 @@ const ChatMessages = ({messages, colormode}) => {
       case 'audio':
         return ( 
           <audio controls>
-            <source src={msg.message} type="audio/mpeg" />
+            <source src={msg.message} type="audio/mpeg" style={{width:'100%'}}/>
           </audio> 
         )
       default:
