@@ -29,7 +29,7 @@ const ChatContainer = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
 
-  const getChatData = async() => {
+  const getChatData = async(selectedChatId) => {
     try{
       const response = await axios.get(`${getChatRoute}${selectedChatId}/`)
       setChatMode(response.data.chat_mode)
@@ -70,13 +70,13 @@ const ChatContainer = () => {
         'username': username,
         'message_type': 'text' 
       }
-      try{
-        const response = await axios.post(addMessageRoute, data)
-        getChatData()
-      } 
-      catch(error){
+      axios.post(addMessageRoute, data)
+      .then(function() {
+        getChatData(selectedChatId)
+      })
+      .catch(function (error) {
         console.log(error)
-      }
+      })
     }
     else { // sendData.message_type === 'file'
       const data = new FormData();
@@ -88,7 +88,7 @@ const ChatContainer = () => {
         const response = await axios.post(addMessageRoute, data, {
           headers: { 'Content-Type': 'multipart/form-data' }
         })
-        getChatData()
+        getChatData(selectedChatId)
       } 
       catch(error){
         console.log(error)
@@ -102,7 +102,7 @@ const ChatContainer = () => {
   };
 
   useEffect(()=> {
-    getChatData()
+    getChatData(selectedChatId)
   }, [selectedChatId])
 
   return (
@@ -113,7 +113,7 @@ const ChatContainer = () => {
             {chatMode && chatMode}
           </h4>
         </div>
-        <ChatMessages messages={messages}/>
+        <ChatMessages messages={messages} colormode={colormode}/>
       </div>
       <div className={styles.chat_input_holder}>
         {chatMode && chatMode!='Text to speech' && 

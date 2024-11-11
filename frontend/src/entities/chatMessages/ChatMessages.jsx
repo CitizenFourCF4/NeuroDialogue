@@ -2,7 +2,10 @@ import React, {useRef, useEffect,} from 'react'
 import FileView from 'src/shared/fileView/FileView';
 import styles from './styles.module.css'
 
-const ChatMessages = ({messages}) => {
+import { FaRobot } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
+
+const ChatMessages = ({messages, colormode}) => {
 
   const chatEndRef = useRef(null);
   useEffect(() => {
@@ -23,7 +26,7 @@ const ChatMessages = ({messages}) => {
       case 'audio':
         return ( 
           <audio controls>
-            <source src={msg.message} type="audio/mpeg" />
+            <source src={msg.message} type="audio/mpeg" style={{width:'100%'}}/>
           </audio> 
         )
       default:
@@ -34,8 +37,13 @@ const ChatMessages = ({messages}) => {
   return (
     <div className={styles.chat_messages_wrapper}>
       {messages && messages.map((msg, index) => (
-        <div className={styles.message_wrapper} key={index} author={msg.author}>
+        <div className={styles.message_wrapper} key={index} author={msg.author} colormode={colormode}>
           <div className={styles.avatar} author={msg.author}>
+            {
+            msg.author === 'chatbot'
+            ? <FaRobot size={30}/>
+            : <FaUser  size={30}/>
+          }
           </div>
           <div className={styles.text_wrapper}>
             <div className={styles.author}>{msg.author === 'chatbot' ? 'Bot ' : 'You'}</div>
@@ -45,7 +53,7 @@ const ChatMessages = ({messages}) => {
           </div>  
         </div>
       ))}
-      <div ref={chatEndRef} />
+      <div ref={chatEndRef}/>
     </div>
   )
 }

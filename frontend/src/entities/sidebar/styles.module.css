@@ -25,7 +25,7 @@
 }
 
 .sidebar_li[active='active'][colorMode='dark']{
-  background-color: rgba(59,55,55,1)
+  background-color: #004568
 }
 
 .sidebar_li[active=''][colorMode='dark']:hover{

@@ -38,7 +38,7 @@ const SidebarChatsContainer = ({chatList, getUserChatList}) => {
     axios.delete(upgradeChatRoute, { data: { 'chat_id': chat_id} })
     .then(function (response) {
       getUserChatList()
-      if(chats.length === 1) dispatch(setSelectedChatId(undefined))
+      dispatch(setSelectedChatId(undefined))
     })
     .catch(function (error) {
       console.log(error)
