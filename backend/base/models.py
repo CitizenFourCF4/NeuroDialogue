@@ -32,10 +32,10 @@ class Pdf2FileMessage(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default='unauthorized')
     created_at = models.DateTimeField(auto_now_add=True)
-    message = models.CharField(max_length=100, default='') # файлы хранятся в файловой системе сервера, по API передается их путь
+    message = models.CharField(max_length=200, default='') # файлы хранятся в файловой системе сервера, по API передается их путь
     message_type = models.CharField(max_length=50, default='') # возможны варианты Text, File
-    filename = models.CharField(max_length=100, default='')
-    filesize = models.CharField(max_length=100, default='')
+    filename = models.CharField(max_length=200, default='')
+    filesize = models.CharField(max_length=200, default='')
 
     def __str__(self):
         return self.message
@@ -45,5 +45,5 @@ class Text2Speech(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default='unauthorized')
     created_at = models.DateTimeField(auto_now_add=True)
-    message = models.CharField(max_length=100, default='') # файлы хранятся в файловой системе сервера, по API передается их путь
+    message = models.CharField(max_length=200, default='') # файлы хранятся в файловой системе сервера, по API передается их путь
     message_type = models.CharField(max_length=50, default='') # возможны варианты Text, File, Audio

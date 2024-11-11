@@ -216,7 +216,7 @@ def create_message_view(request:Request)->Response:
         request (Request): POST request from the client side
 
     Returns:
-        Response: _description_
+        Response: request status code
     """
     try:
         request_data = MessageValidator(
