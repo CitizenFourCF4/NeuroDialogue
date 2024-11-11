@@ -5,11 +5,12 @@
 }
 
 .chatbox[colormode='dark']{
-  background-color: #212121;
+  background: linear-gradient(180deg, #393d46, #1a1d24);
 }
 
 .chatbox[colormode='light']{
-  background-color: #fff;
+  background: linear-gradient(180deg, #026d71, #ffffff);
+  color: white;
 }
 
 /* ------------------ Chat input block -----------------------*/

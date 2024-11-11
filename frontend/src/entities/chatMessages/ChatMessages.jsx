@@ -5,7 +5,7 @@ import styles from './styles.module.css'
 import { FaRobot } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 
-const ChatMessages = ({messages}) => {
+const ChatMessages = ({messages, colormode}) => {
 
   const chatEndRef = useRef(null);
   useEffect(() => {
@@ -37,14 +37,13 @@ const ChatMessages = ({messages}) => {
   return (
     <div className={styles.chat_messages_wrapper}>
       {messages && messages.map((msg, index) => (
-        <div className={styles.message_wrapper} key={index} author={msg.author}>
+        <div className={styles.message_wrapper} key={index} author={msg.author} colormode={colormode}>
           <div className={styles.avatar} author={msg.author}>
             {
             msg.author === 'chatbot'
-            ? <FaRobot color='#3ebb34' size={30}/>
-            : <FaUser color='#e66f07' size={30}/>
+            ? <FaRobot size={30}/>
+            : <FaUser  size={30}/>
           }
-
           </div>
           <div className={styles.text_wrapper}>
             <div className={styles.author}>{msg.author === 'chatbot' ? 'Bot ' : 'You'}</div>
@@ -54,7 +53,7 @@ const ChatMessages = ({messages}) => {
           </div>  
         </div>
       ))}
-      <div ref={chatEndRef} />
+      <div ref={chatEndRef}/>
     </div>
   )
 }
