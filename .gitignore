@@ -2,6 +2,6 @@
 __pycache__
 migrations
 node_modules
-media
 keycloak-26.0.5
 venv
+logs
