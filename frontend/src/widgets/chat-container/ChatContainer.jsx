@@ -11,6 +11,8 @@ import { useSelector } from 'react-redux';
 import { selectChatId, selectColorMode } from 'src/app/store/slices/chatSlice';
 
 import styles from './styles.module.css'
+import AlertDismissible from 'src/widgets/chat-container/Alert';
+
 
 const ChatContainer = () => {
 
@@ -28,15 +30,20 @@ const ChatContainer = () => {
 
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
+  const [error, setError] = useState(null);
 
-  const getChatData = async() => {
+  const getChatData = async(selectedChatId) => {
     try{
       const response = await axios.get(`${getChatRoute}${selectedChatId}/`)
       setChatMode(response.data.chat_mode)
       setMessages(response.data.messages)
-    } 
-    catch (error){
-      console.log(error)
+      setError(null)
+    } catch (error) {
+    console.log(error);
+    // alert(`Ошибка: ${error.response.status} - ${error.response.data.detail || 'Такой возможности пока нет. Ждите обновлений!'}`);
+      if (error.response) {
+        setError(error); 
+      }
     }
   }
 
@@ -57,11 +64,13 @@ const ChatContainer = () => {
     }
   };
 
-  const handleData = async(sendData) => {
+  const handleData = async (sendData) => {
+
+    // Добавляем сообщение о загрузке
     setMessages([...messages, {
       'message': 'Ожидайте, Ваш запрос был передан модели', 
       'author': 'chatbot'
-    }])
+    }]);
 
     if (sendData.message_type === 'text') {
       const data = {
@@ -69,29 +78,28 @@ const ChatContainer = () => {
         'message': sendData.message, 
         'username': username,
         'message_type': 'text' 
+      };
+      try {
+        await axios.post(addMessageRoute, data);
+        await getChatData(selectedChatId);
+      } catch (error) {
+        console.log(error);
+        alert('Ошибка при отправке сообщения. Пожалуйста, попробуйте позже.');
       }
-      try{
-        const response = await axios.post(addMessageRoute, data)
-        getChatData()
-      } 
-      catch(error){
-        console.log(error)
-      }
-    }
-    else { // sendData.message_type === 'file'
+    } else { // sendData.message_type === 'file'
       const data = new FormData();
-      data.append('chat_id', selectedChatId)
+      data.append('chat_id', selectedChatId);
       data.append('message', selectedFile);
-      data.append('username', username)
+      data.append('username', username);
       data.append('message_type', "file");
-      try{
-        const response = await axios.post(addMessageRoute, data, {
+      try {
+        await axios.post(addMessageRoute, data, {
           headers: { 'Content-Type': 'multipart/form-data' }
-        })
-        getChatData()
-      } 
-      catch(error){
-        console.log(error)
+        });
+        await getChatData(selectedChatId);
+      } catch (error) {
+        console.log(error);
+        alert('Ошибка при отправке файла. Пожалуйста, попробуйте позже.');
       }
     }
   }
@@ -102,7 +110,7 @@ const ChatContainer = () => {
   };
 
   useEffect(()=> {
-    getChatData()
+    getChatData(selectedChatId)
   }, [selectedChatId])
 
   return (
@@ -113,10 +121,13 @@ const ChatContainer = () => {
             {chatMode && chatMode}
           </h4>
         </div>
-        <ChatMessages messages={messages}/>
+        
+        <ChatMessages messages={messages} colormode={colormode}/>
+        {error && <AlertDismissible error={error} onClose={() => setError(null)} />}
       </div>
       <div className={styles.chat_input_holder}>
         {chatMode && chatMode!='Text to speech' && 
+        
         <div>
           <input type="file" name="" id="" ref={fileInputRef} onChange={handleFileAttach} style={{ display: 'none' }} />
           <div className={styles.clip_wrapper}>
@@ -124,6 +135,7 @@ const ChatContainer = () => {
           </div>
         </div>
         }
+         
         <TextInputForm onSendData={handleData} colormode={colormode} />
       </div>
       <AttachFileModal show={isShowAttachFileModal} onHide={handleAttachFileModalClose} selectedFile={selectedFile} onSendData={handleData}/>

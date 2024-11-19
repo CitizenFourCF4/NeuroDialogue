@@ -1,0 +1,64 @@
+2024-11-16 at 09:54:32 | INFO | A request was received for a list of chats for the user: valodya
+2024-11-16 at 09:54:32 | INFO | The list of chats for the valodya has been returned
+2024-11-16 at 09:55:05 | INFO | A request was received for a list of chats for the user: valodya
+2024-11-16 at 09:55:05 | INFO | A request was received for information about the chat with the ID: 2
+2024-11-16 at 09:55:05 | INFO | The list of chats for the valodya has been returned
+2024-11-16 at 09:55:05 | INFO | The chat information with the ID 2 has been successfully returned
+2024-11-16 at 09:55:17 | INFO | A request was received to create a chat with data: {'chat_title': 'New Chat', 'username': 'valodya', 'chat_mode': 'Image to video'}
+2024-11-16 at 09:55:17 | INFO | The chat was successfully created with an ID: 3
+2024-11-16 at 09:55:17 | INFO | A request was received for a list of chats for the user: valodya
+2024-11-16 at 09:55:17 | INFO | The list of chats for the valodya has been returned
+2024-11-16 at 09:55:38 | INFO | A request was received to create a chat with data: {'chat_title': 'New Chat', 'username': 'valodya', 'chat_mode': 'Image to video'}
+2024-11-16 at 09:55:39 | INFO | The chat was successfully created with an ID: 4
+2024-11-16 at 09:55:39 | INFO | A request was received for a list of chats for the user: valodya
+2024-11-16 at 09:55:39 | INFO | The list of chats for the valodya has been returned
+2024-11-16 at 09:55:43 | INFO | A request was received for a list of chats for the user: valodya
+2024-11-16 at 09:55:43 | INFO | A request was received for information about the chat with the ID: 4
+2024-11-16 at 09:55:43 | INFO | The list of chats for the valodya has been returned
+2024-11-16 at 09:55:43 | ERROR | Unsupported chat mode: {chat.mode}
+2024-11-16 at 10:03:55 | INFO | A request was received for a list of chats for the user: valodya
+2024-11-16 at 10:03:55 | INFO | A request was received for information about the chat with the ID: 2
+2024-11-16 at 10:03:55 | INFO | The list of chats for the valodya has been returned
+2024-11-16 at 10:03:55 | INFO | The chat information with the ID 2 has been successfully returned
+2024-11-16 at 10:04:14 | INFO | Received a request to create a message with data: {'chat_id': 2, 'message': 'привет', 'username': 'valodya', 'message_type': 'text'}
+2024-11-16 at 10:04:14 | INFO | Starting text-to-speech conversion.
+2024-11-16 at 10:04:14 | INFO | Generated random filename: OsUL4zZwyP.wav
+2024-11-16 at 10:04:14 | INFO | Using model: vosk-model-tts-ru-0.7-multi and speaker ID: 3
+2024-11-16 at 10:04:29 | DEBUG | Tokenized text: ['привет']
+2024-11-16 at 10:04:29 | DEBUG | Processed text: привет
+2024-11-16 at 10:04:29 | INFO | Output path: D:\Study\Kafedra\Gorban_ddz\rep\NeuroDialogue\backend\media\OsUL4zZwyP.wav
+2024-11-16 at 10:04:30 | INFO | Successfully synthesized speech to D:\Study\Kafedra\Gorban_ddz\rep\NeuroDialogue\backend\media\OsUL4zZwyP.wav
+2024-11-16 at 10:04:30 | INFO | Message successfully created for chat with ID: 2
+2024-11-16 at 10:04:30 | INFO | A request was received for information about the chat with the ID: 2
+2024-11-16 at 10:04:30 | INFO | The chat information with the ID 2 has been successfully returned
+2024-11-16 at 10:04:54 | INFO | Received a request to create a message with data: {'chat_id': 2, 'message': 'дороу', 'username': 'valodya', 'message_type': 'text'}
+2024-11-16 at 10:04:54 | INFO | Starting text-to-speech conversion.
+2024-11-16 at 10:04:54 | INFO | Generated random filename: 7sYsm1IhDs.wav
+2024-11-16 at 10:04:54 | INFO | Using model: vosk-model-tts-ru-0.7-multi and speaker ID: 3
+2024-11-16 at 10:05:09 | DEBUG | Tokenized text: ['дороу']
+2024-11-16 at 10:05:09 | DEBUG | Processed text: дороу
+2024-11-16 at 10:05:09 | INFO | Output path: D:\Study\Kafedra\Gorban_ddz\rep\NeuroDialogue\backend\media\7sYsm1IhDs.wav
+2024-11-16 at 10:05:09 | INFO | Successfully synthesized speech to D:\Study\Kafedra\Gorban_ddz\rep\NeuroDialogue\backend\media\7sYsm1IhDs.wav
+2024-11-16 at 10:05:09 | INFO | Message successfully created for chat with ID: 2
+2024-11-16 at 10:05:09 | INFO | A request was received for information about the chat with the ID: 2
+2024-11-16 at 10:05:10 | INFO | The chat information with the ID 2 has been successfully returned
+2024-11-16 at 10:05:42 | INFO | A request was received for a list of chats for the user: valodya
+2024-11-16 at 10:05:42 | INFO | The list of chats for the valodya has been returned
+2024-11-16 at 10:05:42 | INFO | A request was received for information about the chat with the ID: 4
+2024-11-16 at 10:05:42 | ERROR | Unsupported chat mode: Image to video
+2024-11-16 at 10:05:51 | INFO | A request was received for a list of chats for the user: valodya
+2024-11-16 at 10:05:51 | INFO | A request was received for information about the chat with the ID: 3
+2024-11-16 at 10:05:51 | INFO | The list of chats for the valodya has been returned
+2024-11-16 at 10:05:51 | ERROR | Unsupported chat mode: Image to video
+2024-11-16 at 10:49:41 | INFO | A request was received for a list of chats for the user: valodya
+2024-11-16 at 10:49:41 | INFO | The list of chats for the valodya has been returned
+2024-11-16 at 10:49:41 | INFO | A request was received for a list of chats for the user: valodya
+2024-11-16 at 10:49:41 | INFO | The list of chats for the valodya has been returned
+2024-11-16 at 10:50:02 | INFO | A request was received for a list of chats for the user: valodya
+2024-11-16 at 10:50:02 | INFO | A request was received for information about the chat with the ID: 2
+2024-11-16 at 10:50:02 | INFO | The list of chats for the valodya has been returned
+2024-11-16 at 10:50:02 | INFO | The chat information with the ID 2 has been successfully returned
+2024-11-16 at 10:51:30 | INFO | A request was received for a list of chats for the user: valodya
+2024-11-16 at 10:51:30 | INFO | A request was received for information about the chat with the ID: 3
+2024-11-16 at 10:51:30 | ERROR | Unsupported chat mode: {chat.mode}
+2024-11-16 at 10:51:30 | INFO | The list of chats for the valodya has been returned

@@ -16,7 +16,7 @@ const CreateChatModal = (props) => {
 
   const { keycloak } = useKeycloak();
   const username = keycloak.tokenParsed.preferred_username
-  
+
   const [chatMode, setChatMode] = useState(undefined)
   const [title, setTitle] = useState('New Chat')
 
@@ -24,21 +24,21 @@ const CreateChatModal = (props) => {
     if (!chatMode) {
       alert("Выберите тип чата")
     }
-    else{
+    else {
       const data = {
-        'chat_title': title, 
+        'chat_title': title,
         'username': username,
         'chat_mode': chatMode
       }
       setTitle('New Chat')
       axios.post(upgradeChatRoute, data)
-      .then(function() {
-        props.getUserChatList()
-        props.onHide()
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+        .then(function () {
+          props.getUserChatList()
+          props.onHide()
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   }
 
@@ -55,14 +55,14 @@ const CreateChatModal = (props) => {
           <HiOutlineChatAlt2 /> Выберите модель чата
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body style={{'display':'flex', justifyContent:'center'}}>
+      <Modal.Body style={{ 'display': 'flex', justifyContent: 'center' }}>
         <div className={styles.chat_creation_wrapper}>
-          <input type="text" onChange={e => setTitle(e.target.value)}  placeholder="Название чата ..." className={styles.chat_title_input}/>
-          <ul style={{justifyContent: 'center', 'listStyle': 'none'}}>
+          <input type="text" onChange={e => setTitle(e.target.value)} placeholder="Название чата ..." className={styles.chat_title_input} />
+          <ul style={{ justifyContent: 'center', 'listStyle': 'none' }}>
             {chatModes.map((mode, idx) => (
-              <li className={styles.model_header} key={idx} onClick={() => setChatMode(mode.title_)} active={(mode.title_===chatMode) ? 'active': ''}>
+              <li className={styles.model_header} key={idx} onClick={() => setChatMode(mode.title_)} active={(mode.title_ === chatMode) ? 'active' : ''}>
                 <div className={styles.chat_title}>
-                  <ColorCircle color={mode.color} active={(mode.title_===chatMode) ? 'active': ''}/> {mode.title_}
+                  <ColorCircle color={mode.color} active={(mode.title_ === chatMode) ? 'active' : ''} /> {mode.title_}
                 </div>
                 <p className={styles.chat_description}>{mode.description}</p>
               </li>
