@@ -3,10 +3,10 @@
       "baseUrl": ".",
       "paths": {
         "src/*": ["./src/*"],
-        "@pages": ["src/pages"],
-        "@app": ["src/app"],
-        "@api": ["src/app/routes/apiRoutes.js"],
-        "@widgets": ["src/widgets"]
+        "@pages": ["./src/pages"],
+        "@app": ["./src/app"],
+        "@api": ["./src/app/routes/apiRoutes.js"],
+        "@widgets": ["./src/widgets"]
       }
     }
   }

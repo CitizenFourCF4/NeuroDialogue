@@ -1,24 +1,20 @@
 import React, {useState, useEffect, useRef} from 'react'
 import { useKeycloak } from "@react-keycloak/web";
-import axios from 'axios'
-import { getChatRoute, addMessageRoute } from 'src/app/routes/apiRoutes';
-
 import AttachFileModal from 'src/entities/modals/attachFileModal/AttachFileModal';
 import { AiOutlinePaperClip } from "react-icons/ai"
 import ChatMessages from 'src/entities/chatMessages/ChatMessages';
 import TextInputForm from 'src/shared/textInputForm/TextInputForm';
-import { useSelector } from 'react-redux';
-import { selectChatId, selectColorMode } from 'src/app/store/slices/chatSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectChatId, selectChatMode, selectColorMode, getChatData } from 'src/app/store/slices/chatSlice';
 
 import styles from './styles.module.css'
 
 const ChatContainer = () => {
-
-  const [chatMode, setChatMode] = useState('')
-  const [messages, setMessages] = useState([])
+  const dispatch = useDispatch()
 
   const selectedChatId = useSelector(selectChatId)
   const colormode = useSelector(selectColorMode)
+  const chatMode = useSelector(selectChatMode)
 
   const { keycloak } = useKeycloak();
   const username = keycloak.tokenParsed.preferred_username
@@ -28,17 +24,6 @@ const ChatContainer = () => {
 
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
-
-  const getChatData = async(selectedChatId) => {
-    try{
-      const response = await axios.get(`${getChatRoute}${selectedChatId}/`)
-      setChatMode(response.data.chat_mode)
-      setMessages(response.data.messages)
-    } 
-    catch (error){
-      console.log(error)
-    }
-  }
 
   const handleFileAttach = (event) => {
     const file = event.target.files[0];
@@ -56,45 +41,6 @@ const ChatContainer = () => {
       }
     }
   };
-
-  const handleData = async(sendData) => {
-    setMessages([...messages, {
-      'message': 'Ожидайте, Ваш запрос был передан модели', 
-      'author': 'chatbot'
-    }])
-
-    if (sendData.message_type === 'text') {
-      const data = {
-        'chat_id': selectedChatId, 
-        'message': sendData.message, 
-        'username': username,
-        'message_type': 'text' 
-      }
-      axios.post(addMessageRoute, data)
-      .then(function() {
-        getChatData(selectedChatId)
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-    }
-    else { // sendData.message_type === 'file'
-      const data = new FormData();
-      data.append('chat_id', selectedChatId)
-      data.append('message', selectedFile);
-      data.append('username', username)
-      data.append('message_type', "file");
-      try{
-        const response = await axios.post(addMessageRoute, data, {
-          headers: { 'Content-Type': 'multipart/form-data' }
-        })
-        getChatData(selectedChatId)
-      } 
-      catch(error){
-        console.log(error)
-      }
-    }
-  }
   
   const handleClipClick = () => {
     // Открываем диалог выбора файла
@@ -102,7 +48,7 @@ const ChatContainer = () => {
   };
 
   useEffect(()=> {
-    getChatData(selectedChatId)
+    dispatch(getChatData(selectedChatId))
   }, [selectedChatId])
 
   return (
@@ -113,7 +59,7 @@ const ChatContainer = () => {
             {chatMode && chatMode}
           </h4>
         </div>
-        <ChatMessages messages={messages} colormode={colormode}/>
+        <ChatMessages colormode={colormode}/>
       </div>
       <div className={styles.chat_input_holder}>
         {chatMode && chatMode!='Text to speech' && 
@@ -124,9 +70,9 @@ const ChatContainer = () => {
           </div>
         </div>
         }
-        <TextInputForm onSendData={handleData} colormode={colormode} />
+        <TextInputForm colormode={colormode} username={username}/>
       </div>
-      <AttachFileModal show={isShowAttachFileModal} onHide={handleAttachFileModalClose} selectedFile={selectedFile} onSendData={handleData}/>
+      <AttachFileModal show={isShowAttachFileModal} onHide={handleAttachFileModalClose} selectedFile={selectedFile} username={username}/>
     </section>
   )
 }

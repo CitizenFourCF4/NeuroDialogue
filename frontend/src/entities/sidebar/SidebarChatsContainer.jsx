@@ -1,22 +1,25 @@
 import React, {useState} from 'react'
-import { upgradeChatRoute } from 'src/app/routes/apiRoutes';
 import styles from './styles.module.css'
-import axios from 'axios'
 import Badge from 'react-bootstrap/Badge';
 import { BsPencil,BsXLg } from "react-icons/bs";
 import RenameChatModal from '../modals/renameChatModal/RenameChatModal';
+import { useKeycloak } from '@react-keycloak/web';
 
 import { useSelector, useDispatch } from 'react-redux'
-import { selectChatId, selectColorMode, setSelectedChatId } from 'src/app/store/slices/chatSlice';
+import { selectChatId, selectColorMode, setSelectedChatId, deleteChat, selectChatList } from 'src/app/store/slices/chatSlice';
 
-const SidebarChatsContainer = ({chatList, getUserChatList}) => {
+const SidebarChatsContainer = () => {
   const [isShowChangeTitleModal, setIsShowChangeTitleModal] = useState(false);
+
+  const { keycloak } = useKeycloak();
+  const username = keycloak.tokenParsed.preferred_username
 
   const handleChangeTitleModalClose = () => setIsShowChangeTitleModal(false);
   const handleChangeTitleModalShow = () => setIsShowChangeTitleModal(true);
 
   const selectedChatId = useSelector(selectChatId)
   const colormode = useSelector(selectColorMode)
+  const chatList = useSelector(selectChatList)
   const dispatch = useDispatch();
 
   const renderMode = (chat) => {
@@ -30,19 +33,9 @@ const SidebarChatsContainer = ({chatList, getUserChatList}) => {
     }
   };
 
+
   const changeCurrentChatId = (chat_id) => {
     dispatch(setSelectedChatId(chat_id))
-  }
-
-  const chatDeleteHandler = (chat_id) => {
-    axios.delete(upgradeChatRoute, { data: { 'chat_id': chat_id} })
-    .then(function (response) {
-      getUserChatList()
-      dispatch(setSelectedChatId(undefined))
-    })
-    .catch(function (error) {
-      console.log(error)
-    })
   }
 
   return (
@@ -57,12 +50,12 @@ const SidebarChatsContainer = ({chatList, getUserChatList}) => {
             {selectedChatId === chat.chat_id && 
             <div>
               <BsPencil onClick={handleChangeTitleModalShow} style={{'marginRight': '20px'}}/>     
-              <BsXLg onClick={() => chatDeleteHandler(chat.chat_id)}/>
+              <BsXLg onClick={() => dispatch(deleteChat({chat_id: chat.chat_id, username: username}))}/>
             </div>}       
           </li>
           ))} 
       </ul>
-      <RenameChatModal show={isShowChangeTitleModal} onHide={handleChangeTitleModalClose} getUserChatList={getUserChatList}/>
+      <RenameChatModal show={isShowChangeTitleModal} onHide={handleChangeTitleModalClose}/>
     </div>
   )
 }

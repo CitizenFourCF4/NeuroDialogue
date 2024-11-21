@@ -5,7 +5,12 @@ import styles from './styles.module.css'
 import { FaRobot } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 
-const ChatMessages = ({messages, colormode}) => {
+import { selectMessages } from 'src/app/store/slices/chatSlice';
+import { useSelector } from 'react-redux';
+
+const ChatMessages = ({colormode}) => {
+
+  const messages = useSelector(selectMessages)
 
   const chatEndRef = useRef(null);
   useEffect(() => {
