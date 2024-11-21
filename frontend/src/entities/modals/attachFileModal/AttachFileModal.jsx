@@ -2,14 +2,20 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button'
 import FileView from 'src/shared/fileView/FileView';
+import { useDispatch } from 'react-redux';
+import { sendFileMessage } from 'src/app/store/slices/chatSlice';
 
 
 const AttachFileModal = (props) => {
+
+  const dispatch = useDispatch()
+
   const handleSendButton = () => {
-    props.onSendData({
-      message_type: 'file',
+    const sendData = {
       message: props.selectedFile,
-    })
+      username: username
+    }
+    dispatch(sendFileMessage(sendData))
     props.onHide()    
   }
   return (

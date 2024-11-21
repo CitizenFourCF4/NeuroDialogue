@@ -1,18 +1,23 @@
 import React, { useState} from 'react'
 import { AiOutlineSend} from "react-icons/ai"
 import styles from './styles.module.css'
+import { useDispatch } from 'react-redux'
+import { sendTextMessage } from 'src/app/store/slices/chatSlice'
 
 
-const TextInputForm = ({onSendData, colormode}) => {
+const TextInputForm = ({colormode, username}) => {
+
+  const dispatch = useDispatch()
 
   const [inputMessage, setInputMessage] = useState('')
 
   const sendTextMessageHandler = (e) => {
     e.preventDefault()
-    onSendData({
-      message_type: 'text',
+    const sendData = {
       message: inputMessage,
-    })
+      username: username
+    }
+    dispatch(sendTextMessage(sendData))
     setInputMessage('')
   }
   return (

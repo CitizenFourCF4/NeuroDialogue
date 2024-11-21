@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useKeycloak } from "@react-keycloak/web";
-import axios from 'axios';
-import { upgradeChatRoute } from 'src/app/routes/apiRoutes';
 import chatModes from 'src/app/settings/chatModes';
 
 import Button from 'react-bootstrap/Button';
@@ -9,10 +7,15 @@ import Modal from 'react-bootstrap/Modal';
 import ColorCircle from 'src/shared/colorCircle/ColorCircle';
 import { HiOutlineChatAlt2 } from "react-icons/hi";
 
+import { useDispatch } from 'react-redux';
+import { createChat } from 'src/app/store/slices/chatSlice';
+
 import styles from './styles.module.css'
 
 
 const CreateChatModal = (props) => {
+
+  const dispatch = useDispatch()
 
   const { keycloak } = useKeycloak();
   const username = keycloak.tokenParsed.preferred_username
@@ -25,20 +28,9 @@ const CreateChatModal = (props) => {
       alert("Выберите тип чата")
     }
     else{
-      const data = {
-        'chat_title': title, 
-        'username': username,
-        'chat_mode': chatMode
-      }
+      dispatch(createChat({title, username, chatMode}))
       setTitle('New Chat')
-      axios.post(upgradeChatRoute, data)
-      .then(function() {
-        props.getUserChatList()
-        props.onHide()
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+      props.onHide()
     }
   }
 

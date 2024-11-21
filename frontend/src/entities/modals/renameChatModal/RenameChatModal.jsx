@@ -7,11 +7,13 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
-import { useSelector } from 'react-redux'
-import { selectChatId } from 'src/app/store/slices/chatSlice'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectChatId, getChatList } from 'src/app/store/slices/chatSlice'
 
 
 const RenameChatModal = (props) => {
+
+  const dispatch = useDispatch()
   const [inputTitle, setInputTitle] = useState('')
 
   const selectedChatId = useSelector(selectChatId)
@@ -23,7 +25,7 @@ const RenameChatModal = (props) => {
     })
     .then(function (response) {
       props.onHide()
-      props.getUserChatList()
+      dispatch(getChatList())
     })
     .catch(function (error) {
       console.log(error)

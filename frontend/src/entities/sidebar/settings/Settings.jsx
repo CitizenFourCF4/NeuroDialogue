@@ -6,7 +6,7 @@ import { useKeycloak } from "@react-keycloak/web";
 import styles from './styles.module.css'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { selectColorMode, setcolormode } from 'src/app/store/slices/chatSlice'
+import { selectColorMode, setColorMode } from 'src/app/store/slices/chatSlice'
 
 
 const Settings = ({setIsShowSettings}) => {
@@ -18,8 +18,8 @@ const Settings = ({setIsShowSettings}) => {
       <ListGroup className="list-group-flush" style={{textAlign: 'left'}}>
         <ListGroup.Item colormode={colormode} id={styles.listItem} 
         onClick={colormode==='dark' 
-          ? () => {dispatch(setcolormode('light')); setIsShowSettings(false)} 
-          : () => {dispatch(setcolormode('dark')); setIsShowSettings(false)}}>
+          ? () => {dispatch(setColorMode('light')); setIsShowSettings(false)} 
+          : () => {dispatch(setColorMode('dark')); setIsShowSettings(false)}}>
             <MdBrightnessMedium/> Change color theme
         </ListGroup.Item>
         <ListGroup.Item colormode={colormode} id={styles.listItem} onClick={keycloak.logout}>
