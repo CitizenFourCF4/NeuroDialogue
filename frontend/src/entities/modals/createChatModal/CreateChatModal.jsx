@@ -41,6 +41,7 @@ const CreateChatModal = (props) => {
       backdrop='static'
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      className={styles.customModal}
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">

@@ -78,7 +78,7 @@ export const sendTextMessage = createAsyncThunk(
 
 export const sendFileMessage = createAsyncThunk(
   'chatSlice/sendFileMessage',
-  async function(sendData, {rejectWithValue, dispatch}) {
+  async function(sendData, {rejectWithValue, dispatch, getState}) {
     try{
       const chat_id = getState().chatSlice.selectedChatId
       const data = {
@@ -135,7 +135,6 @@ const chatSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(sendTextMessage.pending, (state, action) => {
-        console.log(action.meta.arg)
         state.messages.push({
           'message': action.meta.arg.message, 
           'author': action.meta.arg.username
@@ -144,6 +143,12 @@ const chatSlice = createSlice({
           'message': 'Ожидайте, Ваш запрос был передан модели', 
           'author': 'chatbot'
           })
+      })
+      .addCase(getChatData.rejected, (state, action) => {
+        if (action.payload === 501) {
+          alert("Данный тип чата не реализован")
+        } 
+        state.selectedChatId = undefined
       })
   }
 });

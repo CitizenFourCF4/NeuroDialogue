@@ -4,9 +4,11 @@ import Button from 'react-bootstrap/Button'
 import FileView from 'src/shared/fileView/FileView';
 import { useDispatch } from 'react-redux';
 import { sendFileMessage } from 'src/app/store/slices/chatSlice';
-
+import { useKeycloak } from '@react-keycloak/web';
 
 const AttachFileModal = (props) => {
+  const { keycloak } = useKeycloak();
+  const username = keycloak.tokenParsed.preferred_username
 
   const dispatch = useDispatch()
 

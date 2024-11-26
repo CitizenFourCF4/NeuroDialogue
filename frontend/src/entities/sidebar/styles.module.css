@@ -22,10 +22,12 @@
   padding-right: .5rem;
   border-radius: 4px;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 .sidebar_li[active='active'][colorMode='dark']{
-  background-color: #004568
+  border-right: 3px solid;
+  border-color: orange;
 }
 
 .sidebar_li[active=''][colorMode='dark']:hover{

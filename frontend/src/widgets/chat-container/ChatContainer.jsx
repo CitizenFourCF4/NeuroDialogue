@@ -59,7 +59,7 @@ const ChatContainer = () => {
             {chatMode && chatMode}
           </h4>
         </div>
-        <ChatMessages colormode={colormode}/>
+        <ChatMessages />
       </div>
       <div className={styles.chat_input_holder}>
         {chatMode && chatMode!='Text to speech' && 

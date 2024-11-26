@@ -9,8 +9,7 @@
 }
 
 .chatbox[colormode='light']{
-  background: linear-gradient(180deg, #026d71, #ffffff);
-  color: white;
+  color: black;
 }
 
 /* ------------------ Chat input block -----------------------*/

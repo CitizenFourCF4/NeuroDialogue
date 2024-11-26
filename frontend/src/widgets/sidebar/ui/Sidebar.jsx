@@ -7,10 +7,8 @@ import Settings from 'src/entities/sidebar/settings/Settings';
 import SidebarChatsContainer from 'src/entities/sidebar/SidebarChatsContainer';
 import styles from './styles.module.css'
 
-import { useSelector } from 'react-redux'
-import { selectColorMode, getChatList } from 'src/app/store/slices/chatSlice';
-
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux'
+import { selectColorMode, getChatList, setSelectedChatId } from 'src/app/store/slices/chatSlice';
 
 
 const Sidebar = () => {
@@ -36,7 +34,10 @@ const Sidebar = () => {
 
   return (
     <aside className={styles.sidemenu} colormode={colormode}>
-      <img src="/logo.jpeg" alt="" className={styles.logo}/>
+      <div className={styles.sidebar_header} onClick={() => dispatch(setSelectedChatId(null))}>
+        <img src="/logo.jpeg" alt="" className={styles.logo}/>
+        <h5>NeuroDialogue</h5>
+      </div>
       <div className={styles.side_menu_button} onClick={handleCreateChatModalShow} colormode={colormode}>
           <span>+</span>
           New Chat
