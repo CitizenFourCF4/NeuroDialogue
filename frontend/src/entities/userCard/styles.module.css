@@ -1,0 +1,56 @@
+.userInfo{
+  cursor: pointer;
+  display: flex;
+  width: 93%;   
+  justify-content: left;
+  align-items: center; 
+  position: absolute;
+  bottom: 1rem;    
+  left: 10px;
+  padding-right: .5rem;
+  padding-top: 0.5rem;
+  border-top: 0.5px groove #5c5240;
+  padding-left: 1rem;
+  
+}
+
+.userInfo:hover{
+  padding-right: .5rem;
+  border-radius: 4px;
+}
+
+.userInfo:hover[colorMode='dark']{
+  background-color: rgba(59,55,55,0.3);
+}
+.userInfo:hover[colorMode='light']{
+  background-color: rgba(56, 66, 66, 0.1);
+}
+
+.text_wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  transition: all;
+}
+
+.userCreds{
+  font-weight: 500;
+}
+
+.email{
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: inherit;
+}
+
+.avatar{
+  display: flex;
+  border-radius: 0.375rem;
+  justify-content: center;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: orange;
+  margin-right: 20px;
+}

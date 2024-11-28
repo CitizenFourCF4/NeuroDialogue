@@ -7,6 +7,8 @@ import TextInputForm from 'src/shared/textInputForm/TextInputForm';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectChatId, selectChatMode, selectColorMode, getChatData } from 'src/app/store/slices/chatSlice';
 
+import Alert from 'react-bootstrap/Alert';
+
 import styles from './styles.module.css'
 
 const ChatContainer = () => {

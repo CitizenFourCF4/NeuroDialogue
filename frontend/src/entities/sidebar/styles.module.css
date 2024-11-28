@@ -35,11 +35,11 @@
 }
 
 .sidebar_li[active='active'][colorMode='light']{
-  background-color: rgba(56, 66, 66, 0.3);
+  background: linear-gradient(to top right, #cfd8ff, #cfd8ff);
 }
 
 .sidebar_li[active=''][colorMode='light']:hover{
-  background-color: rgba(56, 66, 66, 0.1);
+  background-color: #daedfa;
 }
 
 .title{

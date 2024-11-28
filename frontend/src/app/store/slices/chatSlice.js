@@ -88,6 +88,7 @@ export const sendFileMessage = createAsyncThunk(
         'message_type': 'file' 
       }
       await axios.post(addMessageRoute, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+      if (chat_id === getState().chatSlice.selectedChatId) dispatch(getChatData(chat_id))
     } catch(error){
       return rejectWithValue(error.response.status);
     }
@@ -149,6 +150,12 @@ const chatSlice = createSlice({
           alert("Данный тип чата не реализован")
         } 
         state.selectedChatId = undefined
+      })
+      .addCase(sendFileMessage.pending, (state, action) => {
+        state.messages.push({
+          'message': 'Ожидайте, Ваш запрос был передан модели', 
+          'author': 'chatbot'
+          })
       })
   }
 });

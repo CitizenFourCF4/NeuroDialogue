@@ -10,6 +10,7 @@
 
 .chatbox[colormode='light']{
   color: black;
+  background: #eaedf188;
 }
 
 /* ------------------ Chat input block -----------------------*/
