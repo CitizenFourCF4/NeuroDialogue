@@ -168,7 +168,13 @@ class ChatEventHandlerView(APIView):
         new_object.save()
 
         logger.info(f"The chat was successfully created with an ID: {id}")
-        return Response(status=status.HTTP_201_CREATED)
+        data = {
+            'chat_id': id,
+            'chat_title': request_data.chat_title,
+            'chat_mode': request_data.chat_mode,
+            'created_at': new_object.created_at
+        }
+        return Response(data, status=status.HTTP_201_CREATED)
 
     def put(self, request:Request)->Response:
         """Chat title changer handler
@@ -272,6 +278,7 @@ def create_message_view(request:Request)->Response:
         logger.error(f"Chat not found with ID: {request_data.chat_id}")
         return Response(status=status.HTTP_404_NOT_FOUND)
 
+    answer_data = {}
     if chat.mode == 'Extract PDF text':
         # file URL
         if request_data.message_type == 'file':
@@ -297,7 +304,7 @@ def create_message_view(request:Request)->Response:
 
         markdown_filename = filename.removesuffix('.pdf') + '.mmd'
         # file URL
-        url = os.path.join(os.getenv('SERVER_URL'),os.path.join(MEDIA_URL, markdown_filename).lstrip('/')) 
+        markdown_url = os.path.join(os.getenv('SERVER_URL'),os.path.join(MEDIA_URL, markdown_filename).lstrip('/')) 
         try:
             filesize = os.path.getsize(os.path.join(MEDIA_ROOT, markdown_filename))
         except Exception as e:
@@ -306,11 +313,30 @@ def create_message_view(request:Request)->Response:
         Pdf2FileMessage.objects.create(
             chat=chat,
             user=user_chatbot,
-            message=url,
+            message=markdown_url,
             message_type='file',
             filename=markdown_filename,
             filesize=filesize
         )
+        answer_data = {
+            'user_message': {
+                'message': url,
+                'author': request_data.username,
+                'message_type': 'file',
+                'filename': filename,
+                'filesize': request_data.message.size,
+                'chat_id': request_data.chat_id
+            },
+            'bot_message': {
+                'message': markdown_url,
+                'author': 'chatbot',
+                'message_type': 'file',
+                'filename': markdown_filename,
+                'filesize': filesize,
+                'chat_id': request_data.chat_id
+            }
+            
+        }
 
     elif chat.mode == 'Text to speech': 
         Text2Speech.objects.create(
@@ -327,7 +353,14 @@ def create_message_view(request:Request)->Response:
             message=link,
             message_type='audio',
         )
+        answer_data = {
+            'message': link,
+            'author': 'chatbot',
+            'message_type': 'audio',
+            'chat_id': request_data.chat_id
+        }
     else:
         logger.error(f"Unsupported chat mode: {chat.mode}")
         return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
-    return Response(status=status.HTTP_200_OK)
+    
+    return Response(data=answer_data, status=status.HTTP_200_OK)

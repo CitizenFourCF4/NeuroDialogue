@@ -5,9 +5,8 @@ import { AiOutlinePaperClip } from "react-icons/ai"
 import ChatMessages from 'src/entities/chatMessages/ChatMessages';
 import TextInputForm from 'src/shared/textInputForm/TextInputForm';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectChatId, selectChatMode, selectColorMode, getChatData } from 'src/app/store/slices/chatSlice';
-
-import Alert from 'react-bootstrap/Alert';
+import { selectChatId, selectChatMode, selectColorMode, getChatData, setColorMode } from 'src/app/store/slices/chatSlice';
+import { VscColorMode } from "react-icons/vsc";
 
 import styles from './styles.module.css'
 
@@ -73,6 +72,14 @@ const ChatContainer = () => {
         </div>
         }
         <TextInputForm colormode={colormode} username={username}/>
+      </div>
+      <div className={styles.brightness}>
+        <VscColorMode 
+          size={30} 
+          onClick={colormode==='dark' 
+            ? () => {dispatch(setColorMode('light'))} 
+            : () => {dispatch(setColorMode('dark'))}} 
+        />
       </div>
       <AttachFileModal show={isShowAttachFileModal} onHide={handleAttachFileModalClose} selectedFile={selectedFile} username={username}/>
     </section>
