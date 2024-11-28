@@ -1,29 +1,20 @@
-.userInfo{
-  cursor: pointer;
+.user_card_wrapper{
+  border-top: 0.5px groove #5c5240;
   display: flex;
-  width: 93%;   
-  justify-content: left;
-  align-items: center; 
   position: absolute;
   bottom: 1rem;    
   left: 10px;
-  padding-right: .5rem;
-  padding-top: 0.5rem;
-  border-top: 0.5px groove #5c5240;
+  align-items: center; 
+  width: 93%;  
   padding-left: 1rem;
-  
+  padding-top: 0.5rem;
 }
 
-.userInfo:hover{
-  padding-right: .5rem;
-  border-radius: 4px;
-}
 
-.userInfo:hover[colorMode='dark']{
-  background-color: rgba(59,55,55,0.3);
-}
-.userInfo:hover[colorMode='light']{
-  background-color: rgba(56, 66, 66, 0.1);
+.userInfo{
+  display: flex;
+  justify-content: left;  
+  width: 100%;
 }
 
 .text_wrapper{
@@ -53,4 +44,13 @@
   height: 2.5rem;
   background-color: orange;
   margin-right: 20px;
+}
+
+.logout{
+  margin-left: auto;
+}
+
+.logout:hover{
+  margin-left: auto;
+  cursor: pointer;
 }

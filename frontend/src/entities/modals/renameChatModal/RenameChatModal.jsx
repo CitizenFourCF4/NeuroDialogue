@@ -1,17 +1,15 @@
 import React, {useState} from 'react';
-
-import axios from 'axios';
-import { upgradeChatRoute } from 'src/app/routes/apiRoutes';
-
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-
 import { useSelector, useDispatch } from 'react-redux'
-import { selectChatId, getChatList } from 'src/app/store/slices/chatSlice'
+import { selectChatId, renameChat } from 'src/app/store/slices/chatSlice'
+import { useKeycloak } from '@react-keycloak/web';
 
 
 const RenameChatModal = (props) => {
+  const { keycloak } = useKeycloak();
+  const username = keycloak.tokenParsed.preferred_username
 
   const dispatch = useDispatch()
   const [inputTitle, setInputTitle] = useState('')
@@ -19,17 +17,12 @@ const RenameChatModal = (props) => {
   const selectedChatId = useSelector(selectChatId)
 
   const titleUpdateHandler = () => {
-    axios.put(upgradeChatRoute, {
-      'new_title': inputTitle, 
-      'chat_id': selectedChatId 
-    })
-    .then(function (response) {
-      props.onHide()
-      dispatch(getChatList())
-    })
-    .catch(function (error) {
-      console.log(error)
-    })
+    dispatch(renameChat({
+      chat_id: selectedChatId, 
+      new_title: inputTitle,
+      username: username
+    }))
+    props.onHide()
   }
 
   return(

@@ -22,3 +22,17 @@
 .welcome_container img {
   height: 20rem;
 }
+
+.brightness{
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+  transition: box-shadow 0.3s ease;
+}
+
+.brightness:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8); /* Увеличение тени при наведении */
+}

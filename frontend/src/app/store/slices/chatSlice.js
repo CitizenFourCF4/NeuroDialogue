@@ -4,73 +4,85 @@ import { addMessageRoute, getChatRoute, getChatsRoute, upgradeChatRoute } from '
 
 export const getChatList = createAsyncThunk(
   'chatSlice/getChatList',
-  async function(username, {rejectWithValue, dispatch}) {
-      try {
-          const response = await axios.get(getChatsRoute, { params:{'username': username} });
-          dispatch(setChatList(response.data.user_chats))
-      } catch (error) {
-          return rejectWithValue(error.response.status);
-      }
+  async function (username, { rejectWithValue, dispatch }) {
+    try {
+      const response = await axios.get(getChatsRoute, { params: { 'username': username } });
+      dispatch(setChatList(response.data.user_chats))
+    } catch (error) {
+      return rejectWithValue(error.response.status);
+    }
   }
 );
 
 export const getChatData = createAsyncThunk(
   'chatSlice/getChatData',
-  async function(selectedChatId, {rejectWithValue, dispatch}) {
-      try {
-          const response = await axios.get(`${getChatRoute}${selectedChatId}/`)
-          dispatch(setChatMode(response.data.chat_mode))
-          dispatch(setMessages(response.data.messages))
-      } catch (error) {
-          return rejectWithValue(error.response.status);
-      }
+  async function (selectedChatId, { rejectWithValue, dispatch }) {
+    try {
+      const response = await axios.get(`${getChatRoute}${selectedChatId}/`)
+      dispatch(setChatMode(response.data.chat_mode))
+      dispatch(setMessages(response.data.messages))
+    } catch (error) {
+      return rejectWithValue(error.response.status);
+    }
   }
 );
 
 export const createChat = createAsyncThunk(
   'chatSlice/createChat',
-  async function({title, username, chatMode}, {rejectWithValue, dispatch}) {
+  async function ({ title, username, chatMode }, { rejectWithValue }) {
     try {
       const data = {
-        'chat_title': title, 
+        'chat_title': title,
         'username': username,
         'chat_mode': chatMode
       }
-        await axios.post(upgradeChatRoute, data);
-        dispatch(getChatList(username))
+      const response = await axios.post(upgradeChatRoute, data);
+      return response.data
     } catch (error) {
-        return rejectWithValue(error.response.status);
+      return rejectWithValue(error.response.status);
+    }
+  }
+)
+
+export const renameChat = createAsyncThunk(
+  'chatSlice/renameChat',
+  async function ({ chat_id, new_title, username }, { rejectWithValue, dispatch }) {
+    try {
+      const data = { 'new_title': new_title, 'chat_id': chat_id }
+      await axios.put(upgradeChatRoute, data);
+      dispatch(getChatList(username))
+    } catch (error) {
+      return rejectWithValue(error.response.status);
     }
   }
 )
 
 export const deleteChat = createAsyncThunk(
   'chatSlice/deleteChat',
-  async function({chat_id, username}, {rejectWithValue, dispatch}) {
+  async function ({ chat_id }, { rejectWithValue }) {
     try {
-        await axios.delete(upgradeChatRoute, { data: { 'chat_id': chat_id} });
-        dispatch(getChatList(username))
-        dispatch(setSelectedChatId(undefined))
+      await axios.delete(upgradeChatRoute, { data: { 'chat_id': chat_id } });
+      return chat_id
     } catch (error) {
-        return rejectWithValue(error.response.status);
+      return rejectWithValue(error.response.status);
     }
   }
 )
 
 export const sendTextMessage = createAsyncThunk(
   'chatSlice/sendTextMessage',
-  async function(sendData, {rejectWithValue, dispatch, getState}) {
-    try{
+  async function (sendData, { rejectWithValue, getState }) {
+    try {
       const chat_id = getState().chatSlice.selectedChatId
       const data = {
-        'chat_id': chat_id, 
-        'message': sendData.message, 
+        'chat_id': chat_id,
+        'message': sendData.message,
         'username': sendData.username,
-        'message_type': 'text' 
+        'message_type': 'text'
       }
-      await axios.post(addMessageRoute, data)
-      if (chat_id === getState().chatSlice.selectedChatId) dispatch(getChatData(chat_id))
-    } catch(error){
+      const response = await axios.post(addMessageRoute, data)
+      return response.data
+    } catch (error) {
       return rejectWithValue(error.response.status);
     }
   }
@@ -78,18 +90,18 @@ export const sendTextMessage = createAsyncThunk(
 
 export const sendFileMessage = createAsyncThunk(
   'chatSlice/sendFileMessage',
-  async function(sendData, {rejectWithValue, dispatch, getState}) {
-    try{
+  async function (sendData, { rejectWithValue, getState }) {
+    try {
       const chat_id = getState().chatSlice.selectedChatId
       const data = {
-        'chat_id': chat_id, 
-        'message': sendData.message, 
+        'chat_id': chat_id,
+        'message': sendData.message,
         'username': sendData.username,
-        'message_type': 'file' 
+        'message_type': 'file'
       }
-      await axios.post(addMessageRoute, data, { headers: { 'Content-Type': 'multipart/form-data' } })
-      if (chat_id === getState().chatSlice.selectedChatId) dispatch(getChatData(chat_id))
-    } catch(error){
+      const response = await axios.post(addMessageRoute, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+      return response.data
+    } catch (error) {
       return rejectWithValue(error.response.status);
     }
   }
@@ -98,9 +110,9 @@ export const sendFileMessage = createAsyncThunk(
 const initialState = {
   selectedChatId: undefined,
   colorMode: 'dark',
-  messages: [], 
+  messages: [],
   chatList: [],
-  chatMode: [] 
+  chatMode: []
 };
 
 const chatSlice = createSlice({
@@ -122,9 +134,6 @@ const chatSlice = createSlice({
     setChatList: (state, action) => {
       state.chatList = action.payload
     },
-    removeChat: (state, action) => {
-      state.chatList = state.chatList.filter(chat => chat.chat_id !== action.payload);
-    }
   },
   selectors: {
     selectChatId: (state) => state.selectedChatId,
@@ -137,25 +146,44 @@ const chatSlice = createSlice({
     builder
       .addCase(sendTextMessage.pending, (state, action) => {
         state.messages.push({
-          'message': action.meta.arg.message, 
+          'message': action.meta.arg.message,
           'author': action.meta.arg.username
-          })
+        })
         state.messages.push({
-          'message': 'Ожидайте, Ваш запрос был передан модели', 
+          'message': 'Ожидайте, Ваш запрос был передан модели',
           'author': 'chatbot'
-          })
+        })
+      })
+      .addCase(sendTextMessage.fulfilled, (state, action) => {
+        if (state.selectedChatId == action.payload.chat_id) {
+          state.messages.pop()
+          state.messages.push(action.payload)
+        }
+      })
+      .addCase(sendFileMessage.pending, (state) => {
+        state.messages.push({
+          'message': 'Ожидайте, Ваш запрос был передан модели',
+          'author': 'chatbot'
+        })
+      })
+      .addCase(sendFileMessage.fulfilled, (state, action) => {
+        if (state.selectedChatId == action.payload.bot_message.chat_id) {
+          state.messages.pop()
+          state.messages.push(action.payload.user_message)
+          state.messages.push(action.payload.bot_message)
+        }
       })
       .addCase(getChatData.rejected, (state, action) => {
         if (action.payload === 501) {
           alert("Данный тип чата не реализован")
-        } 
+        }
         state.selectedChatId = undefined
       })
-      .addCase(sendFileMessage.pending, (state, action) => {
-        state.messages.push({
-          'message': 'Ожидайте, Ваш запрос был передан модели', 
-          'author': 'chatbot'
-          })
+      .addCase(createChat.fulfilled, (state, action) => {
+        state.chatList.unshift(action.payload)
+      })
+      .addCase(deleteChat.fulfilled, (state, action) => {
+        state.chatList = state.chatList.filter(chat => chat.chat_id !== action.payload);
       })
   }
 });

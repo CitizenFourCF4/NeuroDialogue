@@ -4,12 +4,12 @@ import { useKeycloak } from "@react-keycloak/web";
 import CreateChatModal from 'src/entities/modals/createChatModal/CreateChatModal';
 import UserCard from 'src/entities/userCard/UserCard';
 
-import Settings from 'src/entities/sidebar/settings/Settings';
 import SidebarChatsContainer from 'src/entities/sidebar/SidebarChatsContainer';
 import styles from './styles.module.css'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { selectColorMode, getChatList, setSelectedChatId } from 'src/app/store/slices/chatSlice';
+
 
 
 const Sidebar = () => {
@@ -20,8 +20,6 @@ const Sidebar = () => {
   const dispatch = useDispatch()
 
   const colormode = useSelector(selectColorMode)
-
-  const [isShowSettings, setIsShowSettings] = useState(false)
   
   const [isShowCreateChatModal, setIsShowCreateChatModal] = useState(false)
   const handleCreateChatModalShow = () => setIsShowCreateChatModal(true)
@@ -44,9 +42,10 @@ const Sidebar = () => {
           New Chat
       </div>
       <SidebarChatsContainer />
-      {isShowSettings && <Settings setIsShowSettings={setIsShowSettings}/>}
-      {keycloak.authenticated && 
-        <UserCard isShowSettings={isShowSettings} setIsShowSettings={setIsShowSettings} colormode={colormode}/>
+      { keycloak.authenticated && 
+        <div>
+          <UserCard  colormode={colormode}/>
+        </div>
       }
       <CreateChatModal show={isShowCreateChatModal} onHide={handleCreateChatModalClose}/>
     </aside>
