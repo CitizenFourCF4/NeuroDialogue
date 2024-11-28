@@ -63,3 +63,8 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+audio{
+  border-radius: 10px;
+  background-color: rgba(20, 99, 136, 0.966);
+}

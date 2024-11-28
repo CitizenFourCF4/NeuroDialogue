@@ -10,6 +10,7 @@ AI-based applications.
 import os
 from pathlib import Path
 import random
+import re
 import subprocess
 import string
 from typing import Union
@@ -37,11 +38,30 @@ def process_pdf_2_file(path_to_pdf:Union[str, Path], output_dir:Union[str, Path]
 
         if result.returncode == 0:
             logger.info(f"Successfully processed PDF: {path_to_pdf}")
+            markdown_path = path_to_pdf.removesuffix('.pdf') + '.mmd'
+            logger.info(f"Started postprocess markdown file: {markdown_path}")
+            try:
+                postprocess_markdown_output(markdown_path)
+                logger.info(f"Successfully postprocessed MArkdown: {markdown_path}")
+            except Exception as e:
+                logger.exception(f"An exception occurred while postprocessing Markdown: {markdown_path}. Exception: {e}")
         else:
             logger.error(f"Error processing PDF: {path_to_pdf}. Return code: {result.returncode}. Output: {result.stdout}. Error: {result.stderr}")
     except Exception as e:
         logger.exception(f"An exception occurred while processing PDF: {path_to_pdf}. Exception: {e}")
         raise
+
+def postprocess_markdown_output(path_to_markdown:Union[str, Path])->None:
+    strline = []
+    with open(path_to_markdown, 'r+') as f:
+        for line in f:
+            line = re.sub(r'(?:[$]{1})|(?:\\\([\(\\\]\[\)]+\\\))', ' ', line)
+            line = re.sub(r'(?:(\\\())|(?:(\\\)))|(?:(\\\[))|(?:(\\\]))', ' $ ', line)
+            line = re.sub(r'\\tag\{(\d+)\}', r'(\1)', line)
+            strline.append(f'{line}')
+        f.seek(0)
+        f.writelines(strline)
+
 
 def generate_random_sequence(length=10)->str:
     """Generates a sequence of a given length

@@ -1,6 +1,8 @@
 import styles from './styles.module.css'
 import React from 'react'
-import { AiOutlineFile } from "react-icons/ai";
+import { BsMarkdown, BsFilePdf } from "react-icons/bs";
+import { AiOutlineFile } from 'react-icons/ai';
+
 
 const FileView = (props) => {
   function formatFileSize(bytes) {
@@ -11,10 +13,21 @@ const FileView = (props) => {
 
     return parseFloat((bytes / Math.pow(1024, i)).toFixed(1)) + ' ' + sizes[i];
   }
+
+  const renderFileType = (filetype) => {
+    switch (filetype) {
+      case 'pdf':
+        return <BsFilePdf size={props.iconsize} color='white'/>
+      case 'mmd':
+        return <BsMarkdown size={props.iconsize} color='white'/>
+      default:
+        return <AiOutlineFile size={props.iconsize} color='white'/>
+    }
+  }
   return (
     <div className={styles.body_wrapper}>
       <div className={styles.circle}>
-        <AiOutlineFile size={props.iconsize} color='white'/>
+        {renderFileType(props.filetype)}
       </div>
       <div>
         <div>{props.filename}</div>

@@ -3,7 +3,7 @@ ul{
 }
 
 .sidemenu{
-  width: 260px;
+  width: 17rem;
   padding: 10px;
   position: relative;
 }
@@ -13,15 +13,21 @@ ul{
 }
 
 .sidemenu[colorMode='light']{
-  background-color: #f9f9f9;
+  background-color: white;
+}
+
+.sidebar_header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 .side_menu_button{
   padding: 12px;
   text-align: left;
   border-radius: 5px;
-  border: 1px solid white;
-  transition: ease 0.25s all;
+  border: orange 1px solid;
   margin-bottom: 5%;
 }
 
@@ -30,7 +36,7 @@ ul{
 }
 
 .side_menu_button:hover[colorMode='dark'] {
-  background-color: rgba(255,255,255,0.1);
+  background-color: rgba(235, 156, 9, 0.048);
   cursor: pointer;
 }
 
@@ -44,45 +50,9 @@ ul{
   padding-right: 12px;
 }
 
-.userInfo{
-  cursor: pointer;
-  display: flex;
-  width: 93%;   
-  justify-content: left;
-  align-items: center; 
-  position: absolute;
-  bottom: 10px;    
-  left: 10px;
-  padding-right: .5rem;
-  line-height: 45px;
-}
-
-.userInfo:hover{
-  padding-right: .5rem;
-  border-radius: 4px;
-}
-
-.userInfo:hover[colorMode='dark']{
-  background-color: rgba(59,55,55,0.3);
-}
-.userInfo:hover[colorMode='light']{
-  background-color: rgba(56, 66, 66, 0.1);
-}
-
-
-.avatar{
-  display: flex;
-  border-radius: 9999px;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  background-color: #e74c3c;
-  margin-right: 20px;
-}
-
 .logo{
   width: 60px;
   margin-bottom: 10%;
   border-radius: 50%;
+  margin-right: 8%;
 }

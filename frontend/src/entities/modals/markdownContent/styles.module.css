@@ -1,0 +1,15 @@
+.markdown_wrapper{
+  overflow-y: auto;
+  height: 30%;
+}
+
+.link{
+  text-decoration:'none';
+  color: inherit;
+}
+
+.link:hover {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}

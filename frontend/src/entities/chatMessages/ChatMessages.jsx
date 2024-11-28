@@ -1,14 +1,10 @@
 import React, {useRef, useEffect,} from 'react'
-import FileView from 'src/shared/fileView/FileView';
 import styles from './styles.module.css'
-
-import { FaRobot } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
-
 import { selectMessages } from 'src/app/store/slices/chatSlice';
 import { useSelector } from 'react-redux';
+import Message from 'src/entities/message/Message';
 
-const ChatMessages = ({colormode}) => {
+const ChatMessages = () => {
 
   const messages = useSelector(selectMessages)
 
@@ -20,43 +16,11 @@ const ChatMessages = ({colormode}) => {
     }
   }, [messages]);
 
-  const renderMessage = (msg) => {
-    switch (msg.message_type) {
-      case 'file':
-        return (
-          <a href={msg.message} className={styles.file_link} target="_blank">
-            <FileView filename={msg.filename} filesize={msg.filesize} iconsize={25}/>
-          </a>
-          )
-      case 'audio':
-        return ( 
-          <audio controls style={{width:'100%'}}>
-            <source src={msg.message} type="audio/mpeg" style={{width:'100%'}}/>
-          </audio> 
-        )
-      default:
-        return <div>{msg.message}</div>;
-    }
-  };
 
   return (
     <div className={styles.chat_messages_wrapper}>
       {messages && messages.map((msg, index) => (
-        <div className={styles.message_wrapper} key={index} author={msg.author} colormode={colormode}>
-          <div className={styles.avatar} author={msg.author}>
-            {
-            msg.author === 'chatbot'
-            ? <FaRobot size={30}/>
-            : <FaUser  size={30}/>
-          }
-          </div>
-          <div className={styles.text_wrapper}>
-            <div className={styles.author}>{msg.author === 'chatbot' ? 'Bot ' : 'You'}</div>
-              <div className={styles.message}>
-                {renderMessage(msg)}
-              </div>
-          </div>  
-        </div>
+        <Message msg={msg} index={index} key={index}/>
       ))}
       <div ref={chatEndRef}/>
     </div>

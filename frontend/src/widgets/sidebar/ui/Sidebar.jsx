@@ -2,15 +2,14 @@ import React, {useState, useEffect} from 'react'
 import { useKeycloak } from "@react-keycloak/web";
 
 import CreateChatModal from 'src/entities/modals/createChatModal/CreateChatModal';
+import UserCard from 'src/entities/userCard/UserCard';
 
 import Settings from 'src/entities/sidebar/settings/Settings';
 import SidebarChatsContainer from 'src/entities/sidebar/SidebarChatsContainer';
 import styles from './styles.module.css'
 
-import { useSelector } from 'react-redux'
-import { selectColorMode, getChatList } from 'src/app/store/slices/chatSlice';
-
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux'
+import { selectColorMode, getChatList, setSelectedChatId } from 'src/app/store/slices/chatSlice';
 
 
 const Sidebar = () => {
@@ -35,18 +34,20 @@ const Sidebar = () => {
 
 
   return (
-    <aside className={styles.sidemenu} colormode={colormode}>
-      <img src="/logo.jpeg" alt="" className={styles.logo}/>
+    <aside className={styles.sidemenu} colormode={colormode} o>
+      <div className={styles.sidebar_header} onClick={() => dispatch(setSelectedChatId(null))}>
+        <img src="/logo.jpeg" alt="" className={styles.logo}/>
+        <h5>NeuroDialogue</h5>
+      </div>
       <div className={styles.side_menu_button} onClick={handleCreateChatModalShow} colormode={colormode}>
           <span>+</span>
           New Chat
       </div>
       <SidebarChatsContainer />
       {isShowSettings && <Settings setIsShowSettings={setIsShowSettings}/>}
-      <div className={styles.userInfo} onClick={() => setIsShowSettings(!isShowSettings)} colormode={colormode}>
-        <div className={styles.avatar}>{keycloak.authenticated && username[0]}</div>
-        <span className={styles.userInfo_username}>{keycloak.authenticated && username}</span>  
-      </div>
+      {keycloak.authenticated && 
+        <UserCard isShowSettings={isShowSettings} setIsShowSettings={setIsShowSettings} colormode={colormode}/>
+      }
       <CreateChatModal show={isShowCreateChatModal} onHide={handleCreateChatModalClose}/>
     </aside>
   )

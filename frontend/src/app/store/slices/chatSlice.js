@@ -78,7 +78,7 @@ export const sendTextMessage = createAsyncThunk(
 
 export const sendFileMessage = createAsyncThunk(
   'chatSlice/sendFileMessage',
-  async function(sendData, {rejectWithValue, dispatch}) {
+  async function(sendData, {rejectWithValue, dispatch, getState}) {
     try{
       const chat_id = getState().chatSlice.selectedChatId
       const data = {
@@ -88,6 +88,7 @@ export const sendFileMessage = createAsyncThunk(
         'message_type': 'file' 
       }
       await axios.post(addMessageRoute, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+      if (chat_id === getState().chatSlice.selectedChatId) dispatch(getChatData(chat_id))
     } catch(error){
       return rejectWithValue(error.response.status);
     }
@@ -135,11 +136,22 @@ const chatSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(sendTextMessage.pending, (state, action) => {
-        console.log(action.meta.arg)
         state.messages.push({
           'message': action.meta.arg.message, 
           'author': action.meta.arg.username
           })
+        state.messages.push({
+          'message': 'Ожидайте, Ваш запрос был передан модели', 
+          'author': 'chatbot'
+          })
+      })
+      .addCase(getChatData.rejected, (state, action) => {
+        if (action.payload === 501) {
+          alert("Данный тип чата не реализован")
+        } 
+        state.selectedChatId = undefined
+      })
+      .addCase(sendFileMessage.pending, (state, action) => {
         state.messages.push({
           'message': 'Ожидайте, Ваш запрос был передан модели', 
           'author': 'chatbot'
