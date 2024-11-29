@@ -1,9 +1,9 @@
-import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
-import Routing from './routes'
-import './index.css'
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import Routing from './routes';
 import store from './store/store';
+import './index.css';
 
 const App = () => {
   return (
@@ -13,7 +13,6 @@ const App = () => {
           <Routing />
         </BrowserRouter>
       </Provider>
-      
     </div>
   )
 }
