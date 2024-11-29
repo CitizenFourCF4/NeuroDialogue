@@ -7,17 +7,8 @@ import AvatarComponent from 'src/shared/avatarComponent/AvatarComponent';
 import MarkdownContentModal from '../modals/markdownContent/MarkdownContentModal';
 
 
-const Message = ({msg, index}) => {
 
-  const colormode = useSelector(selectColorMode)
-  const [markdownLink, setMarkdownLink] = useState('')
-  const [isShowMarkdownModal, setIsShowMarkdownModal] = useState(false)
-
-  const handleMarkdownOpen = (msg) => {
-    setMarkdownLink(msg.message)
-    setIsShowMarkdownModal(true)
-  }
-
+const Message = ({msg, index}) => { 
 
   const renderMessage = (msg) => {
     switch (msg.message_type) {
@@ -27,7 +18,6 @@ const Message = ({msg, index}) => {
             <div onClick={() => handleMarkdownOpen(msg)} className={styles.file_link}>
               <FileView filetype='mmd' filename={msg.filename} filesize={msg.filesize} iconsize={25} />
             </div>
-              
             )
         }
         else { //.pdf
@@ -47,6 +37,15 @@ const Message = ({msg, index}) => {
         return <div>{msg.message}</div>;
     }
   };
+
+  const colormode = useSelector(selectColorMode)
+  const [markdownLink, setMarkdownLink] = useState('')
+  const [isShowMarkdownModal, setIsShowMarkdownModal] = useState(false)
+
+  const handleMarkdownOpen = (msg) => {
+    setMarkdownLink(msg.message)
+    setIsShowMarkdownModal(true)
+  }
 
   return (
     <div className={styles.message_wrapper} key={index} author={msg.author} colormode={colormode}>
