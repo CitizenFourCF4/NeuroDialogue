@@ -6,9 +6,10 @@
   bottom: 0;
   left: 0;
   right: 0;
+  background-color: #282c34;
 }
 
 .container[colorMode='dark']{
-  background-color: #282c34;
+  background-color: #212121;
   color: white;
 }

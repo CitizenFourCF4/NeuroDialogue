@@ -17,16 +17,24 @@ const TextInputForm = ({colormode, username}) => {
       message: inputMessage,
       username: username
     }
-    dispatch(sendTextMessage(sendData))
-    setInputMessage('')
+    if (inputMessage){
+      dispatch(sendTextMessage(sendData))
+      setInputMessage('')
+    }
+    else{
+      alert('Нельзя передавать пустое сообщение')
+    }
+    
   }
   return (
     <form method='POST' onSubmit={sendTextMessageHandler} style={{width:'50%'}}>
       <div className={styles.chat_input_wrapper} colormode={colormode}>
         <input placeholder='Type message...' className={styles.chat_input_textarea} onChange={e => setInputMessage(e.target.value)} value={inputMessage} colormode={colormode}/>
-        <button className={styles.chat_input_button}>
+        {
+          inputMessage && <button className={styles.chat_input_button}>
           <AiOutlineSend size={25}/>
         </button>
+        }
       </div>
     </form>
   )

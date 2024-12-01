@@ -2,15 +2,16 @@
   flex: 1;
   position: relative;
   height: 100%;
+  max-width: 1664px;
 }
 
 .chatbox[colormode='dark']{
-  background: linear-gradient(180deg, #393d46, #1a1d24);
+  background: #212121;
 }
 
 .chatbox[colormode='light']{
   color: black;
-  background: #b9ceb988;
+  background: white;
 }
 
 /* ------------------ Chat input block -----------------------*/
