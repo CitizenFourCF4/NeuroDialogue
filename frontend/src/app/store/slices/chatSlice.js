@@ -181,9 +181,11 @@ const chatSlice = createSlice({
       })
       .addCase(createChat.fulfilled, (state, action) => {
         state.chatList.unshift(action.payload)
+        state.selectedChatId = action.payload.chat_id
       })
       .addCase(deleteChat.fulfilled, (state, action) => {
         state.chatList = state.chatList.filter(chat => chat.chat_id !== action.payload);
+        state.selectedChatId = undefined
       })
   }
 });

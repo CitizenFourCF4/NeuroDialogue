@@ -49,17 +49,15 @@ const Message = ({msg, index}) => {
 
   return (
     <div className={styles.message_wrapper} key={index} author={msg.author} colormode={colormode}>
-      <div className={styles.message_header}>
+      <div className={styles.icon}>
         <AvatarComponent author={msg.author}/>
-        <div className={styles.author}>{msg.author === 'chatbot' ? 'Bot ' : 'You'}</div>
       </div>
-      <div className={styles.message}>
+      <div className={styles.message_text}>
         {renderMessage(msg)}
       </div> 
       {markdownLink && 
         <MarkdownContentModal link={markdownLink} show={isShowMarkdownModal} onHide={() => setIsShowMarkdownModal(false)}/>
       }
-      
     </div>
   )
 }

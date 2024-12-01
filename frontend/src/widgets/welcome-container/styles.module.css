@@ -1,6 +1,8 @@
 .chatbox{
   flex: 1;
   position: relative;
+  min-width: 900px;
+  height: 100vh;
 }
 
 .chatbox[colormode='dark']{
@@ -9,10 +11,10 @@
 
 .welcome_container{
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  height: 100%;
+
 }
 
 .welcome_container[colormode='dark']{
@@ -21,6 +23,69 @@
 
 .welcome_container img {
   height: 20rem;
+}
+
+.content_container{
+  width: 100%;
+  place-items: center;
+  position: absolute;
+  top: 30%;
+}
+
+
+.cards{
+  display: flex;
+  gap: 50px;
+  padding: 20px;
+  justify-content: center;
+}
+
+.card{
+  height: 14rem;
+  width: 14rem;
+  padding: 15px;
+  background-color: #f0f4f9;
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+  color: #212121;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  font-size: 18px;
+  box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.6);
+}
+
+.card[colormode='dark']{
+  background-color: #1d1e22;
+  color: #e4e6ec;
+} 
+
+
+.image{
+  padding: 8px;
+  position: absolute;
+  background-color: #fff;
+  border-radius: 20px;
+  bottom: 10px;
+  right: 10px;
+  align-items: center;
+  display: flex;
+}
+
+.image[colormode='dark']{
+  background-color: #000000;
+}
+
+.header{
+  font-weight: 600;
+  margin-top: 10rem;
+}
+
+.header span {
+  background: -webkit-linear-gradient(16deg, #4b90ff, #ff5546);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .brightness{

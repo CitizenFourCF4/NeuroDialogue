@@ -11,6 +11,9 @@ import styles from './styles.module.css'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { selectColorMode, getChatList } from 'src/app/store/slices/chatSlice';
+import Drawer from '@mui/material/Drawer';
+
+import { BsList } from "react-icons/bs";
 
 const Sidebar = () => {
 
@@ -30,19 +33,32 @@ const Sidebar = () => {
     dispatch(getChatList(username))
   }, [dispatch]) 
 
+  const [openDrawer, setOpenDrawer] = useState(true)
 
   return (
-    <aside className={styles.sidemenu} colormode={colormode}>
-      <SidebarHeader handleCreateChatModalShow={handleCreateChatModalShow} colormode={colormode}/>
-      <NewChatButton colormode={colormode} handleCreateChatModalShow={handleCreateChatModalShow}/>
-      <SidebarChatsContainer />
-      { keycloak.authenticated && 
-        <div>
-          <UserCard colormode={colormode}/>
-        </div>
-      }
-      <CreateChatModal show={isShowCreateChatModal} onHide={handleCreateChatModalClose}/>
-    </aside>
+    <div >
+    {/* {!openDrawer && 
+      <div className={styles.slider} >
+        <BsList size={25} onClick={() => {setOpenDrawer(true)}}/>
+      </div>}
+    <Drawer open={openDrawer} onClose={() => { setOpenDrawer(true)}} variant='persistent' PaperProps={{style: {border: 'none'}}}> */}
+      <aside className={styles.sidemenu} colormode={colormode}>
+        {/* <div className={styles.drawer} >
+          <BsList size={25} onClick={() => {setOpenDrawer(false)}}/>
+        </div> */}
+        
+        <SidebarHeader handleCreateChatModalShow={handleCreateChatModalShow} colormode={colormode}/>
+        <NewChatButton colormode={colormode} handleCreateChatModalShow={handleCreateChatModalShow}/>
+        <SidebarChatsContainer />
+        { keycloak.authenticated && 
+          <div>
+            <UserCard colormode={colormode}/>
+          </div>
+        }
+        <CreateChatModal show={isShowCreateChatModal} onHide={handleCreateChatModalClose}/>
+      </aside>
+    {/* </Drawer> */}
+    </div>
   )
 }
 
