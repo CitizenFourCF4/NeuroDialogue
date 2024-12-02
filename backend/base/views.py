@@ -47,7 +47,7 @@ def user_chats_list_view(request:Request)->Response:
     for chat in Chat.objects.filter(user=user)]
 
     data = {
-      'user_chats': user_chats_list[::-1]
+      'user_chats': sorted(user_chats_list, key=lambda x: x['chat_id'])[::-1]
     }
     logger.info(f"The list of chats for the {username} has been returned")
     return Response(data, status=status.HTTP_200_OK)

@@ -18,6 +18,8 @@
     "@mui/styled-engine-sc": "^6.1.8",
     "@react-keycloak/web": "^3.4.0",
     "@reduxjs/toolkit": "^2.3.0",
+    "@wavesurfer/react": "^1.0.7",
+    "animate.css": "^4.1.1",
     "axios": "^1.6.7",
     "jwt-decode": "^4.0.0",
     "keycloak-js": "^26.0.1",
@@ -35,7 +37,8 @@
     "remark-gfm": "^4.0.0",
     "remark-math": "^6.0.0",
     "remark-parse": "^11.0.0",
-    "styled-components": "^6.1.13"
+    "styled-components": "^6.1.13",
+    "wavesurfer.js": "^7.8.10"
   },
   "devDependencies": {
     "@types/react": "^18.2.64",

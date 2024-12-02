@@ -160,6 +160,12 @@ const chatSlice = createSlice({
           state.messages.push(action.payload)
         }
       })
+      .addCase(sendTextMessage.rejected, (state, action) => {
+        if (action.payload === 422) {
+          alert("Произошла ошибка, проверьте, что форма отправленного сообщения соответсвует типу чата")
+        }
+        state.messages = []
+      })
       .addCase(sendFileMessage.pending, (state) => {
         state.messages.push({
           'message': 'Ожидайте, Ваш запрос был передан модели',
@@ -172,6 +178,12 @@ const chatSlice = createSlice({
           state.messages.push(action.payload.user_message)
           state.messages.push(action.payload.bot_message)
         }
+      })
+      .addCase(sendFileMessage.rejected, (state, action) => {
+        if (action.payload === 422) {
+          alert("Произошла ошибка, проверьте, что форма отправленного сообщения соответсвует типу чата")
+        }
+        state.selectedChatId = undefined
       })
       .addCase(getChatData.rejected, (state, action) => {
         if (action.payload === 501) {
