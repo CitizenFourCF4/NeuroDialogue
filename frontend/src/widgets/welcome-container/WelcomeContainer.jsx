@@ -7,6 +7,8 @@ import { useKeycloak } from '@react-keycloak/web';
 
 import { FaFilePdf, FaFileAudio, FaVideo} from "react-icons/fa";
 
+import 'animate.css';
+
 
 const WelcomeContainer = () => {
   const colormode = useSelector(selectColorMode)
@@ -45,7 +47,7 @@ const WelcomeContainer = () => {
               </div>
             </div>
           </div>
-          <h2 className={styles.header}>To start messaging please select or create <span>AI CHAT.</span> </h2>
+          <h2 className={styles.header}>To start messaging please select or create <span >AI CHAT.</span> </h2>
         </div>
       </div>        
       <div className={styles.brightness}>

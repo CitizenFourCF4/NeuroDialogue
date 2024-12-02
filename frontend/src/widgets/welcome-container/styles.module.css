@@ -3,6 +3,7 @@
   position: relative;
   min-width: 900px;
   height: 100vh;
+  background-color: #ffffff;
 }
 
 .chatbox[colormode='dark']{
@@ -54,6 +55,7 @@
   display: flex;
   font-size: 18px;
   box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease;
 }
 
 .card[colormode='dark']{
@@ -61,6 +63,11 @@
   color: #e4e6ec;
 } 
 
+.card:hover{
+  transform: scale(1.04);
+  border-radius: 10px;
+  border: 2px orange solid;
+}
 
 .image{
   padding: 8px;

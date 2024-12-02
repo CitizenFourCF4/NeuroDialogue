@@ -1076,6 +1076,11 @@
     "@types/babel__core" "^7.20.5"
     react-refresh "^0.14.0"
 
+"@wavesurfer/react@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@wavesurfer/react/-/react-1.0.7.tgz#5bbb8fe8080f4478e896a32eeeb5ed111bbc4266"
+  integrity sha512-Bw2rd2zqVL1ERy8N9mciacbQW3N5Gn9oRjhq3kjqgtLeE8a1WSTU+4kU0E37541jf432eNZ8lNzuodFFSiNccw==
+
 acorn-jsx@^5.3.2:
   version "5.3.2"
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.2.tgz#7ed5bb55908b3b2f1bc55c6af1653bada7f07937"
@@ -1095,6 +1100,11 @@ ajv@^6.12.4:
     fast-json-stable-stringify "^2.0.0"
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
+
+animate.css@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/animate.css/-/animate.css-4.1.1.tgz#614ec5a81131d7e4dc362a58143f7406abd68075"
+  integrity sha512-+mRmCTv6SbCmtYJCN4faJMNFVNN5EuCTTprDTAo7YzIGji2KADmakjVA3+8mVDkZ2Bf09vayB35lSQIex2+QaQ==
 
 ansi-regex@^5.0.1:
   version "5.0.1"
@@ -4126,6 +4136,11 @@ warning@^4.0.0, warning@^4.0.3:
   integrity sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==
   dependencies:
     loose-envify "^1.0.0"
+
+wavesurfer.js@^7.8.10:
+  version "7.8.10"
+  resolved "https://registry.yarnpkg.com/wavesurfer.js/-/wavesurfer.js-7.8.10.tgz#3b952464c71074331d41f6b0e35d4e2686807c89"
+  integrity sha512-fQtMENm5uPvB7GGZtWj61W82IighH2Jx6nbW6ciL1uITU6Ea9i3rvp+Z2CTJaau5dMwAD6pCALkNvTkIXIIeYw==
 
 web-namespaces@^2.0.0:
   version "2.0.1"

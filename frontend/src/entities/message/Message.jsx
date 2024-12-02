@@ -5,6 +5,7 @@ import FileView from 'src/shared/fileView/FileView';
 import styles from './styles.module.css'
 import AvatarComponent from 'src/shared/avatarComponent/AvatarComponent';
 import MarkdownContentModal from '../modals/markdownContent/MarkdownContentModal';
+import MediaComponent from 'src/shared/mediaComponent/MediaComponent';
 
 
 
@@ -29,9 +30,10 @@ const Message = ({msg, index}) => {
         }
       case 'audio':
         return ( 
-          <audio controls  style={{width:'100%'}}>
-            <source src={msg.message} type="audio/mpeg" style={{width:'100%'}}/>
-          </audio> 
+          <MediaComponent audioUrl={msg.message}/>
+          // <audio controls  style={{width:'100%'}}>
+          //   <source src={msg.message} type="audio/mpeg" style={{width:'100%'}}/>
+          // </audio> 
         )
       default:
         return <div>{msg.message}</div>;

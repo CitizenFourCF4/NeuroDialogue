@@ -114,7 +114,7 @@ def process_text_to_speech(text:str, path_prefix:str, filename:str='', speaker_i
 
         output_path = os.path.join(path_prefix, filename)
         logger.info(f"Output path: {output_path}")
-        synth.synth(text, output_path, speaker_id=speaker_id)
+        synth.synth(text, output_path, speaker_id=speaker_id, speech_rate=.8)
         logger.info(f"Successfully synthesized speech to {output_path}")
         return filename
     except Exception as e:
