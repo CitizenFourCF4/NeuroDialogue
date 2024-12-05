@@ -21,6 +21,11 @@ const Message = ({msg, index}) => {
             </div>
             )
         }
+        else if (msg.message.endsWith(".jpeg") || msg.message.endsWith('.jpg') || msg.message.endsWith('.png') || msg.message.endsWith('.gif')) {
+          return(
+            <img src={msg.message} style={{width:'300px', height:'300px'}} />
+          )
+        }
         else { //.pdf
           return (
             <a href={msg.message} className={styles.file_link} target="_blank">
@@ -31,9 +36,6 @@ const Message = ({msg, index}) => {
       case 'audio':
         return ( 
           <MediaComponent audioUrl={msg.message}/>
-          // <audio controls  style={{width:'100%'}}>
-          //   <source src={msg.message} type="audio/mpeg" style={{width:'100%'}}/>
-          // </audio> 
         )
       default:
         return <div>{msg.message}</div>;

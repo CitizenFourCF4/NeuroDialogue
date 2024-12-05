@@ -78,7 +78,8 @@ export const sendTextMessage = createAsyncThunk(
         'chat_id': chat_id,
         'message': sendData.message,
         'username': sendData.username,
-        'message_type': 'text'
+        'message_type': 'text',
+        'message_id': sendData.message_id
       }
       const response = await axios.post(addMessageRoute, data)
       return response.data
@@ -97,7 +98,8 @@ export const sendFileMessage = createAsyncThunk(
         'chat_id': chat_id,
         'message': sendData.message,
         'username': sendData.username,
-        'message_type': 'file'
+        'message_type': 'file',
+        'message_id': sendData.message_id
       }
       const response = await axios.post(addMessageRoute, data, { headers: { 'Content-Type': 'multipart/form-data' } })
       return response.data
@@ -147,22 +149,25 @@ const chatSlice = createSlice({
       .addCase(sendTextMessage.pending, (state, action) => {
         state.messages.push({
           'message': action.meta.arg.message,
-          'author': action.meta.arg.username
+          'author': action.meta.arg.username,
+          'message_id': action.meta.arg.message_id
         })
         state.messages.push({
           'message': 'Ожидайте, Ваш запрос был передан модели',
-          'author': 'chatbot'
+          'author': 'chatbot',
+          'message_id': action.meta.arg.message_id
         })
+
       })
       .addCase(sendTextMessage.fulfilled, (state, action) => {
         if (state.selectedChatId == action.payload.chat_id) {
-          state.messages.pop()
-          state.messages.push(action.payload)
+          const index = state.messages.findIndex(item => (item.author === 'chatbot') && (item.message_id === action.payload.message_id))
+          state.messages[index] = action.payload
         }
       })
       .addCase(sendTextMessage.rejected, (state, action) => {
         if (action.payload === 422) {
-          alert("Произошла ошибка, проверьте, что форма отправленного сообщения соответсвует типу чата")
+          alert("Произошла ошибка, проверьте, что форма отправленного сообщения соответствует типу чата")
         }
         state.messages = []
       })
@@ -182,6 +187,9 @@ const chatSlice = createSlice({
       .addCase(sendFileMessage.rejected, (state, action) => {
         if (action.payload === 422) {
           alert("Произошла ошибка, проверьте, что форма отправленного сообщения соответсвует типу чата")
+        }
+        if (action.payload === 500) {
+          alert("Произошла ошибка на сервере")
         }
         state.selectedChatId = undefined
       })

@@ -7,8 +7,8 @@ import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math'
 import remarkGfm from "remark-gfm";
 import { BsDownload } from "react-icons/bs";
+import { MathJaxContext, MathJax } from "better-react-mathjax";
 import 'src/app/static/katex.min.css'
-import remarkParse from 'remark-parse'
 
 const MarkdownContentModal = (props) => {
 
@@ -21,6 +21,14 @@ const MarkdownContentModal = (props) => {
     })
   }, []) 
 
+  const config = {
+    loader: { load: ["[tex]/html"] },
+    tex: {
+      packages: { "[+]": ["html"] },
+      inlineMath: [["$", "$"]],
+      displayMath: [["$$", "$$"]],
+    },
+  };
 
   return (
     <Modal
@@ -37,8 +45,11 @@ const MarkdownContentModal = (props) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <ReactMarkdown remarkPlugins={[remarkMath, remarkGfm ]} rehypePlugins={[rehypeKatex]} className={styles.markdown_wrapper}>{markdownContent}</ReactMarkdown>
-        
+      <MathJaxContext config={config}>
+        <MathJax dynamic hideUntilTypeset="every">
+          <ReactMarkdown remarkPlugins={[remarkGfm]} className={styles.markdown_wrapper} >{markdownContent}</ReactMarkdown>
+        </MathJax>
+      </MathJaxContext>
       </Modal.Body>
       <Modal.Footer>
         <a href={props.link} className={styles.link}>

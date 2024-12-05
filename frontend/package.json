@@ -21,6 +21,7 @@
     "@wavesurfer/react": "^1.0.7",
     "animate.css": "^4.1.1",
     "axios": "^1.6.7",
+    "better-react-mathjax": "^2.0.4-beta1",
     "jwt-decode": "^4.0.0",
     "keycloak-js": "^26.0.1",
     "react": "^18.2.0",
