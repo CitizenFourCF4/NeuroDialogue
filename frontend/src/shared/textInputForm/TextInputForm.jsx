@@ -4,7 +4,6 @@ import styles from './styles.module.css'
 import { useDispatch } from 'react-redux'
 import { sendTextMessage } from 'src/app/store/slices/chatSlice'
 
-
 const TextInputForm = ({colormode, username}) => {
 
   const dispatch = useDispatch()
@@ -15,7 +14,8 @@ const TextInputForm = ({colormode, username}) => {
     e.preventDefault()
     const sendData = {
       message: inputMessage,
-      username: username
+      username: username,
+      message_id: Date.now().toString()
     }
     if (inputMessage){
       dispatch(sendTextMessage(sendData))
@@ -24,7 +24,6 @@ const TextInputForm = ({colormode, username}) => {
     else{
       alert('Нельзя передавать пустое сообщение')
     }
-    
   }
   return (
     <form method='POST' onSubmit={sendTextMessageHandler} style={{width:'50%'}}>

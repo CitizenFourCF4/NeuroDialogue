@@ -35,3 +35,14 @@ class Text2Speech(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     message = models.CharField(max_length=1000, default='') # файлы хранятся в файловой системе сервера, по API передается их путь
     message_type = models.CharField(max_length=50, default='') # возможны варианты Text, File, Audio
+
+
+class Image2Video(models.Model):
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default='unauthorized')
+    created_at = models.DateTimeField(auto_now_add=True)
+    message = models.CharField(max_length=1000, default='') # файлы хранятся в файловой системе сервера, по API передается их путь
+    message_type = models.CharField(max_length=50, default='') # возможны варианты Text, File
+
+    def __str__(self):
+        return self.message

@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { sendFileMessage } from 'src/app/store/slices/chatSlice';
 import { useKeycloak } from '@react-keycloak/web';
 
+
 const AttachFileModal = (props) => {
   const { keycloak } = useKeycloak();
   const username = keycloak.tokenParsed.preferred_username
@@ -15,7 +16,8 @@ const AttachFileModal = (props) => {
   const handleSendButton = () => {
     const sendData = {
       message: props.selectedFile,
-      username: username
+      username: username,
+      message_id: Date.now().toString()
     }
     dispatch(sendFileMessage(sendData))
     props.onHide()    

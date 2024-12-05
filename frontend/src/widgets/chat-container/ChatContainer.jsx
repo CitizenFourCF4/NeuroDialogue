@@ -7,6 +7,7 @@ import TextInputForm from 'src/shared/textInputForm/TextInputForm';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectChatId, selectChatMode, selectColorMode, getChatData, setColorMode } from 'src/app/store/slices/chatSlice';
 import { VscColorMode } from "react-icons/vsc";
+import { CHAT_TYPES } from 'src/app/constants/chatTypes';
 
 import styles from './styles.module.css'
 
@@ -29,11 +30,12 @@ const ChatContainer = () => {
   const handleFileAttach = (event) => {
     const file = event.target.files[0];
     const filename = file.name
+    console.log(filename)
     if (file) {
-      if ((chatMode === 'Extract PDF text') && !filename.endsWith(".pdf")) {
+      if ((chatMode === CHAT_TYPES.EXTRACT_PDF_TEXT) && !filename.endsWith(".pdf")) {
         alert('Выберите .pdf файл')
       }
-      else if ((chatMode === 'Image to Video') && (!filename.endsWith('.jpeg') || !filename.endsWith('.jpg') || !filename.endsWith('.png'))){
+      else if ((chatMode === CHAT_TYPES.IMAGE_2_VIDEO) && (!filename.endsWith('.jpeg') && !filename.endsWith('.jpg') && !filename.endsWith('.png'))){
         alert('Выберите [.jpg, .jpeg, .png] файл')
       }
       else{
